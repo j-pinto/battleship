@@ -1,36 +1,36 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
+	mode: "development",
 
-  entry: {
-    script: './src/script.js',
-  },
+	entry: {
+		script: "./src/script.js",
+	},
 
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    clean: true,
-  },
+	output: {
+		filename: "[name].bundle.js",
+		path: path.resolve(__dirname, "dist"),
+		clean: true,
+	},
 
-  module: {
-    rules: [
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
+	module: {
+		rules: [
+			{
+				test: /\.css$/i,
+				use: ["style-loader", "css-loader"],
+			},
+		],
+	},
 
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Battleship',
-    }),
-  ],
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: "Battleship",
+		}),
+	],
 
-  devServer: {
-    static: './dist',
-  },
-  devtool: 'inline-source-map',
+	devServer: {
+		static: "./dist",
+	},
+	devtool: "inline-source-map",
 };

@@ -1,7 +1,9 @@
-import './style.css';
-console.log('hello, world!')
+import "./style.css";
+
+console.log("hello, world!");
+
 function dummyFunc() {
-  return 1
+	return 1;
 }
 
-export { dummyFunc }
+export { dummyFunc };
