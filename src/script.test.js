@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { compareArrays } from "./script.js";
+import { compareArrays, isHit } from "./script.js";
 
 describe("compareArrays", () => {
 	test("returns true for arrays with same elements, same order", () => {
@@ -30,5 +30,47 @@ describe("compareArrays", () => {
 		let arr1 = [1, 2, 3, 4];
 		let arr2 = [1, 2, 3];
 		expect(compareArrays(arr1, arr2)).toBe(false);
+	});
+});
+
+describe("isHit", () => {
+	test("returns true if position array contains shot array", () => {
+		let positions = [
+			[0, 0],
+			[1, 1],
+			[2, 2],
+		];
+		let shot = [1, 1];
+		expect(isHit(shot, positions)).toBe(true);
+	});
+
+	test("returns false if position array does not contain shot array", () => {
+		let positions = [
+			[0, 0],
+			[1, 1],
+			[2, 2],
+		];
+		let shot = [1, 2];
+		expect(isHit(shot, positions)).toBe(false);
+	});
+
+	test("returns false if position array and shot array are different lengths", () => {
+		let positions = [
+			[0, 0],
+			[1, 1],
+			[2, 2],
+		];
+		let shot = [1, 1, 1];
+		expect(isHit(shot, positions)).toBe(false);
+	});
+
+	test("returns false if shot array out of order from a position item with same elements", () => {
+		let positions = [
+			[0, 0],
+			[1, 2],
+			[2, 2],
+		];
+		let shot = [2, 1];
+		expect(isHit(shot, positions)).toBe(false);
 	});
 });

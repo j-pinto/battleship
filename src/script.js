@@ -5,4 +5,8 @@ function compareArrays(array1, array2) {
 	return array1.every((item, index) => item === array2[index]);
 }
 
-export { compareArrays };
+function isHit(shot, positions) {
+	return positions.some((item) => compareArrays(item, shot));
+}
+
+export { compareArrays, isHit };
