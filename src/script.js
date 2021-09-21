@@ -21,4 +21,9 @@ let isHit = function (shot, positions) {
 	return positions.some(areEqualArrays(shot));
 };
 
-export { curry, areEqualArrays, isHit };
+let getMatch = function (shot, boats) {
+	let result = boats.find((boat) => isHit(shot, boat.positions));
+	return result ? result.name : undefined;
+};
+
+export { curry, areEqualArrays, isHit, getMatch };

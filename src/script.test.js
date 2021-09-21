@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { curry, areEqualArrays, isHit } from "./script.js";
+import { curry, areEqualArrays, isHit, getMatch } from "./script.js";
 
 describe("curry", () => {
 	test("curried func works with args passed separately", () => {
@@ -88,5 +88,36 @@ describe("isHit", () => {
 		];
 		let shot = [2, 1];
 		expect(isHit(shot, positions)).toBe(false);
+	});
+});
+
+describe("getMatch", () => {
+	let boats = [
+		{
+			name: "carrier",
+			positions: [
+				[0, 0],
+				[0, 1],
+				[0, 2],
+			],
+		},
+		{
+			name: "destroyer",
+			positions: [
+				[1, 0],
+				[1, 1],
+				[1, 2],
+			],
+		},
+	];
+
+	test("returns boat name if hit", () => {
+		let shot = [1, 0];
+		expect(getMatch(shot, boats)).toBe("destroyer");
+	});
+
+	test("returns undefined if miss", () => {
+		let shot = [0, 3];
+		expect(getMatch(shot, boats)).toBe(undefined);
 	});
 });
