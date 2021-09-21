@@ -1,5 +1,21 @@
 /* eslint-disable no-undef */
-import { areEqualArrays, isHit } from "./script.js";
+import { curry, areEqualArrays, isHit } from "./script.js";
+
+describe("curry", () => {
+	test("curried func works with args passed separately", () => {
+		let sum = (a, b, c) => a + b + c;
+		sum = curry(sum);
+
+		expect(sum(1)(2)(3)).toBe(6);
+	});
+
+	test("curried func works with args passed normally", () => {
+		let sum = (a, b, c) => a + b + c;
+		sum = curry(sum);
+
+		expect(sum(1, 2, 3)).toBe(6);
+	});
+});
 
 describe("areEqualArrays", () => {
 	test("returns true for arrays with same elements, same order", () => {
