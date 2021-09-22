@@ -9,6 +9,7 @@ import {
 	getSouthPossiblePositions,
 	getEastPossiblePositions,
 	getWestPossiblePositions,
+	getRandomOrigin,
 } from "./script.js";
 
 describe("curry", () => {
@@ -192,5 +193,40 @@ describe("Curried getPossiblePositions", () => {
 				[2, 4],
 			];
 		expect(getWestPossiblePositions(origin, boatLength)).toStrictEqual(answer);
+	});
+});
+
+describe("getRandomOrigin", () => {
+	let boats = [
+		{
+			name: "carrier",
+			positions: [
+				[0, 0],
+				[1, 1],
+				[2, 2],
+			],
+		},
+		{
+			name: "destroyer",
+			positions: [
+				[3, 3],
+				[4, 4],
+				[5, 5],
+			],
+		},
+	];
+
+	test("over many trials, returns 2-item array not equal to any existing position", () => {
+		for (let i = 0; i < 500; i++) {
+			let result = getRandomOrigin(boats);
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBe(2);
+			expect(result).not.toEqual([0, 0]);
+			expect(result).not.toEqual([1, 1]);
+			expect(result).not.toEqual([2, 2]);
+			expect(result).not.toEqual([3, 3]);
+			expect(result).not.toEqual([4, 4]);
+			expect(result).not.toEqual([5, 5]);
+		}
 	});
 });

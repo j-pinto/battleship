@@ -27,6 +27,16 @@ const getMatch = function (shot, boats) {
 	return result ? result.name : undefined;
 };
 
+const getRandomOrigin = function (boats) {
+	let origin = [];
+	do {
+		origin[0] = Math.floor(Math.random() * 10);
+		origin[1] = Math.floor(Math.random() * 10);
+	} while (getMatch(origin, boats));
+
+	return origin;
+};
+
 const increment = function (current, step) {
 	return [current[0] + step[0], current[1] + step[1]];
 };
@@ -56,4 +66,5 @@ export {
 	getSouthPossiblePositions,
 	getEastPossiblePositions,
 	getWestPossiblePositions,
+	getRandomOrigin,
 };
