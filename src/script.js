@@ -27,7 +27,7 @@ const getMatch = function (shot, boats) {
 	return result ? result.name : undefined;
 };
 
-const getPossiblePositions = function (step, origin, boatLength) {
+const getPossiblePositions = curry((step, origin, boatLength) => {
 	let coordinate = origin;
 	let array = [coordinate];
 	while (array.length < boatLength) {
@@ -35,7 +35,7 @@ const getPossiblePositions = function (step, origin, boatLength) {
 		array.push(coordinate);
 	}
 	return array;
-};
+});
 
 const increment = function (current, step) {
 	return [current[0] + step[0], current[1] + step[1]];
