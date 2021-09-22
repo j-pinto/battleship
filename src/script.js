@@ -26,4 +26,18 @@ let getMatch = function (shot, boats) {
 	return result ? result.name : undefined;
 };
 
-export { curry, areEqualArrays, isHit, getMatch };
+let getPossiblePositions = function (step, origin, boatLength) {
+	let coordinate = origin;
+	let array = [coordinate];
+	while (array.length < boatLength) {
+		coordinate = increment(coordinate, step);
+		array.push(coordinate);
+	}
+	return array;
+};
+
+function increment(current, step) {
+	return [current[0] + step[0], current[1] + step[1]];
+}
+
+export { curry, areEqualArrays, isHit, getMatch, getPossiblePositions };

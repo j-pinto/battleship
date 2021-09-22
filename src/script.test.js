@@ -1,5 +1,11 @@
 /* eslint-disable no-undef */
-import { curry, areEqualArrays, isHit, getMatch } from "./script.js";
+import {
+	curry,
+	areEqualArrays,
+	isHit,
+	getMatch,
+	getPossiblePositions,
+} from "./script.js";
 
 describe("curry", () => {
 	test("curried func works with args passed separately", () => {
@@ -119,5 +125,22 @@ describe("getMatch", () => {
 	test("returns undefined if miss", () => {
 		let shot = [0, 3];
 		expect(getMatch(shot, boats)).toBe(undefined);
+	});
+});
+
+describe("getPossiblePositions", () => {
+	test("returns correct array of positions given boatLength and origin", () => {
+		let step = [0, 1],
+			origin = [2, 3],
+			boatLength = 4,
+			answer = [
+				[2, 3],
+				[2, 4],
+				[2, 5],
+				[2, 6],
+			];
+		expect(getPossiblePositions(step, origin, boatLength)).toStrictEqual(
+			answer
+		);
 	});
 });
