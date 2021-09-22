@@ -27,6 +27,10 @@ const getMatch = function (shot, boats) {
 	return result ? result.name : undefined;
 };
 
+const increment = function (current, step) {
+	return [current[0] + step[0], current[1] + step[1]];
+};
+
 const getPossiblePositions = curry((step, origin, boatLength) => {
 	let coordinate = origin;
 	let array = [coordinate];
@@ -37,8 +41,19 @@ const getPossiblePositions = curry((step, origin, boatLength) => {
 	return array;
 });
 
-const increment = function (current, step) {
-	return [current[0] + step[0], current[1] + step[1]];
-};
+const getNorthPossiblePositions = getPossiblePositions([0, 1]);
+const getSouthPossiblePositions = getPossiblePositions([0, -1]);
+const getEastPossiblePositions = getPossiblePositions([1, 0]);
+const getWestPossiblePositions = getPossiblePositions([-1, 0]);
 
-export { curry, areEqualArrays, isHit, getMatch, getPossiblePositions };
+export {
+	curry,
+	areEqualArrays,
+	isHit,
+	getMatch,
+	getPossiblePositions,
+	getNorthPossiblePositions,
+	getSouthPossiblePositions,
+	getEastPossiblePositions,
+	getWestPossiblePositions,
+};

@@ -5,6 +5,10 @@ import {
 	isHit,
 	getMatch,
 	getPossiblePositions,
+	getNorthPossiblePositions,
+	getSouthPossiblePositions,
+	getEastPossiblePositions,
+	getWestPossiblePositions,
 } from "./script.js";
 
 describe("curry", () => {
@@ -142,5 +146,51 @@ describe("getPossiblePositions", () => {
 		expect(getPossiblePositions(step, origin, boatLength)).toStrictEqual(
 			answer
 		);
+	});
+});
+
+describe("Curried getPossiblePositions", () => {
+	test("North returns correct array of positions given boatLength and origin", () => {
+		let origin = [2, 3],
+			boatLength = 3,
+			answer = [
+				[2, 3],
+				[2, 4],
+				[2, 5],
+			];
+		expect(getNorthPossiblePositions(origin, boatLength)).toStrictEqual(answer);
+	});
+
+	test("South returns correct array of positions given boatLength and origin", () => {
+		let origin = [2, 3],
+			boatLength = 3,
+			answer = [
+				[2, 3],
+				[2, 2],
+				[2, 1],
+			];
+		expect(getSouthPossiblePositions(origin, boatLength)).toStrictEqual(answer);
+	});
+
+	test("East returns correct array of positions given boatLength and origin", () => {
+		let origin = [2, 3],
+			boatLength = 3,
+			answer = [
+				[2, 3],
+				[3, 3],
+				[4, 3],
+			];
+		expect(getEastPossiblePositions(origin, boatLength)).toStrictEqual(answer);
+	});
+
+	test("West returns correct array of positions given boatLength and origin", () => {
+		let origin = [4, 4],
+			boatLength = 3,
+			answer = [
+				[4, 4],
+				[3, 4],
+				[2, 4],
+			];
+		expect(getWestPossiblePositions(origin, boatLength)).toStrictEqual(answer);
 	});
 });
