@@ -1,6 +1,6 @@
 import "./style.css";
 
-let curry = function (func) {
+const curry = function (func) {
 	return function curried(...args) {
 		if (args.length >= func.length) {
 			return func.apply(this, args);
@@ -12,21 +12,21 @@ let curry = function (func) {
 	};
 };
 
-let areEqualArrays = curry((array1, array2) => {
+const areEqualArrays = curry((array1, array2) => {
 	if (array1.length != array2.length) return false;
 	return array1.every((item, index) => item === array2[index]);
 });
 
-let isHit = function (shot, positions) {
+const isHit = function (shot, positions) {
 	return positions.some(areEqualArrays(shot));
 };
 
-let getMatch = function (shot, boats) {
+const getMatch = function (shot, boats) {
 	let result = boats.find((boat) => isHit(shot, boat.positions));
 	return result ? result.name : undefined;
 };
 
-let getPossiblePositions = function (step, origin, boatLength) {
+const getPossiblePositions = function (step, origin, boatLength) {
 	let coordinate = origin;
 	let array = [coordinate];
 	while (array.length < boatLength) {
@@ -36,8 +36,8 @@ let getPossiblePositions = function (step, origin, boatLength) {
 	return array;
 };
 
-function increment(current, step) {
+const increment = function (current, step) {
 	return [current[0] + step[0], current[1] + step[1]];
-}
+};
 
 export { curry, areEqualArrays, isHit, getMatch, getPossiblePositions };
