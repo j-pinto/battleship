@@ -1,3 +1,4 @@
+"use strict";
 import "./style.css";
 
 const curry = function (func) {
