@@ -66,6 +66,17 @@ const positionSetInvalid = function (positions, boats) {
 	});
 };
 
+const pickRandomPositionSet = function (positionSets, boats) {
+	let validSets = positionSets.filter((set) => !positionSetInvalid(set, boats));
+
+	if (validSets.length == 0) {
+		return undefined;
+	} else {
+		let randomIndex = Math.floor(Math.random() * validSets.length);
+		return validSets[randomIndex];
+	}
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -79,4 +90,5 @@ export {
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
+	pickRandomPositionSet,
 };
