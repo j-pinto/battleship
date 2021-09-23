@@ -13,6 +13,7 @@ import {
 	outOfBounds,
 	positionSetInvalid,
 	pickRandomPositionSet,
+	randomBoatPlacement,
 } from "./script.js";
 
 describe("curry", () => {
@@ -397,5 +398,58 @@ describe("pickRandomPositionSet", () => {
 
 		let result = pickRandomPositionSet(positionSets, boats);
 		expect(result).toBe(undefined);
+	});
+});
+
+describe("randomBoatPlacement", () => {
+	test("over many trials, returns valid new boat position", () => {
+		let boats = [
+			{
+				name: "carrier",
+				positions: [
+					[0, 0],
+					[0, 1],
+					[0, 2],
+					[0, 3],
+					[0, 4],
+				],
+			},
+			{
+				name: "battleship",
+				positions: [
+					[4, 8],
+					[4, 7],
+					[4, 6],
+					[4, 5],
+				],
+			},
+			{
+				name: "submarine",
+				positions: [
+					[9, 5],
+					[8, 5],
+					[7, 5],
+				],
+			},
+			{
+				name: "destroyer",
+				positions: [
+					[7, 3],
+					[8, 3],
+					[9, 3],
+				],
+			},
+		];
+
+		let boatLength = 3;
+
+		for (let i = 0; i < 500; i++) {
+			let result = randomBoatPlacement(boats, boatLength);
+			expect(result.length).toBe(boatLength);
+			expect(boats[0].positions).not.toContainEqual(result);
+			expect(boats[1].positions).not.toContainEqual(result);
+			expect(boats[2].positions).not.toContainEqual(result);
+			expect(boats[3].positions).not.toContainEqual(result);
+		}
 	});
 });

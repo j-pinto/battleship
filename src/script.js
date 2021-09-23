@@ -77,6 +77,23 @@ const pickRandomPositionSet = function (positionSets, boats) {
 	}
 };
 
+const randomBoatPlacement = function (boats, boatLength) {
+	let chosenPositionSet;
+	do {
+		let origin = getRandomOrigin(boats);
+
+		let possiblePositions = [];
+		possiblePositions.push(getNorthPossiblePositions(origin, boatLength));
+		possiblePositions.push(getSouthPossiblePositions(origin, boatLength));
+		possiblePositions.push(getEastPossiblePositions(origin, boatLength));
+		possiblePositions.push(getWestPossiblePositions(origin, boatLength));
+
+		chosenPositionSet = pickRandomPositionSet(possiblePositions, boats);
+	} while (chosenPositionSet == undefined);
+
+	return chosenPositionSet;
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -91,4 +108,5 @@ export {
 	outOfBounds,
 	positionSetInvalid,
 	pickRandomPositionSet,
+	randomBoatPlacement,
 };
