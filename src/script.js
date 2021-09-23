@@ -51,14 +51,15 @@ const getPossiblePositions = function (step, origin, boatLength) {
 	return array;
 };
 
-const getAllSets = function (origin, boatLength) {
+const getAllSets = function (origin, boatLength, boats) {
 	let sets = [];
 	sets.push(getPossiblePositions([0, 1], origin, boatLength));
 	sets.push(getPossiblePositions([0, -1], origin, boatLength));
 	sets.push(getPossiblePositions([1, 0], origin, boatLength));
 	sets.push(getPossiblePositions([-1, 0], origin, boatLength));
 
-	return sets;
+	let validSets = sets.filter((set) => !positionSetInvalid(set, boats));
+	return validSets.length == 0 ? undefined : validSets;
 };
 
 const outOfBounds = function (array) {
@@ -71,30 +72,19 @@ const positionSetInvalid = function (positions, boats) {
 	});
 };
 
-const getValidPositionSets = function (positionSets, boats) {
-	let validSets = positionSets.filter((set) => !positionSetInvalid(set, boats));
-	return validSets.length == 0 ? undefined : validSets;
-};
-
-const pickRandomPositionSet = function (positionSets, boats) {
-	let validSets = getValidPositionSets(positionSets, boats);
-
-	if (validSets == undefined) {
-		return undefined;
-	} else {
-		let randomIndex = Math.floor(Math.random() * validSets.length);
-		return validSets[randomIndex];
-	}
+const pickRandomPositionSet = function (positionSets) {
+	let randomIndex = Math.floor(Math.random() * positionSets.length);
+	return positionSets[randomIndex];
 };
 
 const randomBoatPlacement = function (boats, boatLength) {
-	let chosenPositionSet;
+	let positionSets;
 	do {
 		let origin = getRandomOrigin(boats);
-		let possiblePositions = getAllSets(origin, boatLength);
-		chosenPositionSet = pickRandomPositionSet(possiblePositions, boats);
-	} while (chosenPositionSet == undefined);
+		positionSets = getAllSets(origin, boatLength, boats);
+	} while (positionSets == undefined);
 
+	let chosenPositionSet = pickRandomPositionSet(positionSets);
 	return chosenPositionSet;
 };
 
@@ -113,7 +103,6 @@ export {
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
-	getValidPositionSets,
 	pickRandomPositionSet,
 	randomBoatPlacement,
 	getUserPossiblePositions,
