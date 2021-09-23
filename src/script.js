@@ -56,6 +56,10 @@ const getSouthPossiblePositions = getPossiblePositions([0, -1]);
 const getEastPossiblePositions = getPossiblePositions([1, 0]);
 const getWestPossiblePositions = getPossiblePositions([-1, 0]);
 
+const positionsConflict = function (positions, boats) {
+	return positions.some((pos) => getMatch(pos, boats));
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -67,4 +71,5 @@ export {
 	getEastPossiblePositions,
 	getWestPossiblePositions,
 	getRandomOrigin,
+	positionsConflict,
 };

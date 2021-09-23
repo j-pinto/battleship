@@ -10,6 +10,7 @@ import {
 	getEastPossiblePositions,
 	getWestPossiblePositions,
 	getRandomOrigin,
+	positionsConflict,
 } from "./script.js";
 
 describe("curry", () => {
@@ -228,5 +229,46 @@ describe("getRandomOrigin", () => {
 			expect(result).not.toEqual([4, 4]);
 			expect(result).not.toEqual([5, 5]);
 		}
+	});
+});
+
+describe("positionsConflict", () => {
+	let boats = [
+		{
+			name: "carrier",
+			positions: [
+				[0, 0],
+				[1, 1],
+				[2, 2],
+			],
+		},
+		{
+			name: "destroyer",
+			positions: [
+				[3, 3],
+				[4, 4],
+				[5, 5],
+			],
+		},
+	];
+
+	test("returns true if array contains any existing boat position", () => {
+		let positions = [
+			[7, 5],
+			[6, 5],
+			[5, 5],
+			[4, 5],
+		];
+		expect(positionsConflict(positions, boats)).toBe(true);
+	});
+
+	test("returns false if array contains no existing boat position", () => {
+		let positions = [
+			[7, 6],
+			[6, 6],
+			[5, 6],
+			[4, 6],
+		];
+		expect(positionsConflict(positions, boats)).toBe(false);
 	});
 });
