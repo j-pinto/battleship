@@ -41,7 +41,7 @@ const increment = function (current, step) {
 	return [current[0] + step[0], current[1] + step[1]];
 };
 
-const getPossiblePositions = curry((step, origin, boatLength) => {
+const getPossiblePositions = function (step, origin, boatLength) {
 	let coordinate = origin;
 	let array = [coordinate];
 	while (array.length < boatLength) {
@@ -49,12 +49,17 @@ const getPossiblePositions = curry((step, origin, boatLength) => {
 		array.push(coordinate);
 	}
 	return array;
-});
+};
 
-const getNorthPossiblePositions = getPossiblePositions([0, 1]);
-const getSouthPossiblePositions = getPossiblePositions([0, -1]);
-const getEastPossiblePositions = getPossiblePositions([1, 0]);
-const getWestPossiblePositions = getPossiblePositions([-1, 0]);
+const getAllSets = function (origin, boatLength) {
+	let sets = [];
+	sets.push(getPossiblePositions([0, 1], origin, boatLength));
+	sets.push(getPossiblePositions([0, -1], origin, boatLength));
+	sets.push(getPossiblePositions([1, 0], origin, boatLength));
+	sets.push(getPossiblePositions([-1, 0], origin, boatLength));
+
+	return sets;
+};
 
 const outOfBounds = function (array) {
 	return array[0] < 0 || array[1] < 0 || array[0] > 9 || array[1] > 9;
@@ -86,17 +91,16 @@ const randomBoatPlacement = function (boats, boatLength) {
 	let chosenPositionSet;
 	do {
 		let origin = getRandomOrigin(boats);
-
-		let possiblePositions = [];
-		possiblePositions.push(getNorthPossiblePositions(origin, boatLength));
-		possiblePositions.push(getSouthPossiblePositions(origin, boatLength));
-		possiblePositions.push(getEastPossiblePositions(origin, boatLength));
-		possiblePositions.push(getWestPossiblePositions(origin, boatLength));
-
+		let possiblePositions = getAllSets(origin, boatLength);
 		chosenPositionSet = pickRandomPositionSet(possiblePositions, boats);
 	} while (chosenPositionSet == undefined);
 
 	return chosenPositionSet;
+};
+
+const getUserPossiblePositions = function (userOrigin, boatLength, boats) {
+	let possiblePositions = getAllSets(userOrigin, boatLength);
+	return getValidPositionSets(possiblePositions, boats);
 };
 
 export {
@@ -105,14 +109,12 @@ export {
 	isHit,
 	getBoatNameIfHit,
 	getPossiblePositions,
-	getNorthPossiblePositions,
-	getSouthPossiblePositions,
-	getEastPossiblePositions,
-	getWestPossiblePositions,
+	getAllSets,
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
 	getValidPositionSets,
 	pickRandomPositionSet,
 	randomBoatPlacement,
+	getUserPossiblePositions,
 };
