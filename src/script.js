@@ -62,11 +62,7 @@ const outOfBounds = function (array) {
 
 const positionSetInvalid = function (positions, boats) {
 	return positions.some((pos) => {
-		return getBoatNameIfHit(pos, boats)
-			? true
-			: outOfBounds(pos)
-			? true
-			: false;
+		return getBoatNameIfHit(pos, boats) || outOfBounds(pos) || false;
 	});
 };
 
