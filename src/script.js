@@ -22,7 +22,7 @@ const isHit = function (shot, positions) {
 	return positions.some(areEqualArrays(shot));
 };
 
-const getMatch = function (shot, boats) {
+const getBoatNameIfHit = function (shot, boats) {
 	let result = boats.find((boat) => isHit(shot, boat.positions));
 	return result ? result.name : undefined;
 };
@@ -32,7 +32,7 @@ const getRandomOrigin = function (boats) {
 	do {
 		origin[0] = Math.floor(Math.random() * 10);
 		origin[1] = Math.floor(Math.random() * 10);
-	} while (getMatch(origin, boats));
+	} while (getBoatNameIfHit(origin, boats));
 
 	return origin;
 };
@@ -62,7 +62,11 @@ const outOfBounds = function (array) {
 
 const positionSetInvalid = function (positions, boats) {
 	return positions.some((pos) => {
-		return getMatch(pos, boats) ? true : outOfBounds(pos) ? true : false;
+		return getBoatNameIfHit(pos, boats)
+			? true
+			: outOfBounds(pos)
+			? true
+			: false;
 	});
 };
 
@@ -70,7 +74,7 @@ export {
 	curry,
 	areEqualArrays,
 	isHit,
-	getMatch,
+	getBoatNameIfHit,
 	getPossiblePositions,
 	getNorthPossiblePositions,
 	getSouthPossiblePositions,

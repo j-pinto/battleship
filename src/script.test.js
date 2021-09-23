@@ -3,7 +3,7 @@ import {
 	curry,
 	areEqualArrays,
 	isHit,
-	getMatch,
+	getBoatNameIfHit,
 	getPossiblePositions,
 	getNorthPossiblePositions,
 	getSouthPossiblePositions,
@@ -104,7 +104,7 @@ describe("isHit", () => {
 	});
 });
 
-describe("getMatch", () => {
+describe("getBoatNameIfHit", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -126,12 +126,12 @@ describe("getMatch", () => {
 
 	test("returns boat name if hit", () => {
 		let shot = [1, 0];
-		expect(getMatch(shot, boats)).toBe("destroyer");
+		expect(getBoatNameIfHit(shot, boats)).toBe("destroyer");
 	});
 
 	test("returns undefined if miss", () => {
 		let shot = [0, 3];
-		expect(getMatch(shot, boats)).toBe(undefined);
+		expect(getBoatNameIfHit(shot, boats)).toBe(undefined);
 	});
 });
 
