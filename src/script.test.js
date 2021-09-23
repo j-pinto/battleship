@@ -10,6 +10,7 @@ import {
 	getEastPossiblePositions,
 	getWestPossiblePositions,
 	getRandomOrigin,
+	outOfBounds,
 	positionsConflict,
 } from "./script.js";
 
@@ -229,6 +230,22 @@ describe("getRandomOrigin", () => {
 			expect(result).not.toEqual([4, 4]);
 			expect(result).not.toEqual([5, 5]);
 		}
+	});
+});
+
+describe("outOfBounds", () => {
+	test("returns true if array has element outside range 0...9", () => {
+		let array1 = [-1, 8],
+			array2 = [3, 10];
+		expect(outOfBounds(array1)).toBe(true);
+		expect(outOfBounds(array2)).toBe(true);
+	});
+
+	test("returns false if array elements all inside range 0...9", () => {
+		let array1 = [1, 8],
+			array2 = [3, 1];
+		expect(outOfBounds(array1)).toBe(false);
+		expect(outOfBounds(array2)).toBe(false);
 	});
 });
 

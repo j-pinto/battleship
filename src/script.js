@@ -60,6 +60,10 @@ const positionsConflict = function (positions, boats) {
 	return positions.some((pos) => getMatch(pos, boats));
 };
 
+const outOfBounds = function (array) {
+	return array[0] < 0 || array[1] < 0 || array[0] > 9 || array[1] > 9;
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -71,5 +75,6 @@ export {
 	getEastPossiblePositions,
 	getWestPossiblePositions,
 	getRandomOrigin,
+	outOfBounds,
 	positionsConflict,
 };
