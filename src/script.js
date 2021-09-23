@@ -66,10 +66,15 @@ const positionSetInvalid = function (positions, boats) {
 	});
 };
 
-const pickRandomPositionSet = function (positionSets, boats) {
+const getValidPositionSets = function (positionSets, boats) {
 	let validSets = positionSets.filter((set) => !positionSetInvalid(set, boats));
+	return validSets.length == 0 ? undefined : validSets;
+};
 
-	if (validSets.length == 0) {
+const pickRandomPositionSet = function (positionSets, boats) {
+	let validSets = getValidPositionSets(positionSets, boats);
+
+	if (validSets == undefined) {
 		return undefined;
 	} else {
 		let randomIndex = Math.floor(Math.random() * validSets.length);
@@ -107,6 +112,7 @@ export {
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
+	getValidPositionSets,
 	pickRandomPositionSet,
 	randomBoatPlacement,
 };
