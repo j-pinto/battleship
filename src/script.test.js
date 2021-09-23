@@ -8,7 +8,6 @@ import {
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
-	pickRandomPositionSet,
 	randomBoatPlacement,
 } from "./script.js";
 
@@ -249,105 +248,6 @@ describe("positionsInvalid", () => {
 			[4, 6],
 		];
 		expect(positionSetInvalid(positions, boats)).toBe(false);
-	});
-});
-
-describe("pickRandomPositionSet", () => {
-	test("over many trials, returns a position set that has no conflicts with existing boat positions", () => {
-		let boats = [
-			{
-				name: "carrier",
-				positions: [
-					[0, 0],
-					[0, 1],
-					[0, 2],
-				],
-			},
-			{
-				name: "destroyer",
-				positions: [
-					[2, 2],
-					[2, 3],
-					[2, 4],
-				],
-			},
-		];
-		let positionSets = [
-			[
-				[1, 1], //north
-				[1, 2],
-				[1, 3],
-			],
-			[
-				[1, 1], //south - invalid
-				[1, 0],
-				[1, -1],
-			],
-			[
-				[1, 1], //east
-				[2, 1],
-				[3, 1],
-			],
-			[
-				[1, 1], //west - invalid
-				[0, 1],
-				[-1, 1],
-			],
-		];
-
-		let correctAnswers = [positionSets[0], positionSets[2]];
-		for (let i = 0; i < 100; i++) {
-			let result = pickRandomPositionSet(positionSets, boats);
-			expect(result).not.toStrictEqual(positionSets[1]);
-			expect(result).not.toStrictEqual(positionSets[3]);
-			expect(correctAnswers).toContainEqual(result);
-		}
-	});
-
-	test("returns undefined if all position sets conflict or out of bounds", () => {
-		let boats = [
-			{
-				name: "carrier",
-				positions: [
-					[0, 1],
-					[0, 2],
-					[0, 3],
-				],
-			},
-			{
-				name: "destroyer",
-				positions: [
-					[1, 0],
-					[1, 1],
-					[1, 2],
-				],
-			},
-		];
-		let positionSets = [
-			[
-				[0, 0],
-				[0, 1],
-				[0, 2],
-			],
-			[
-				[0, 0],
-				[0, -1],
-				[0, -2],
-			],
-			[
-				[0, 0],
-				[1, 0],
-				[2, 0],
-			],
-			[
-				[0, 0],
-				[-1, 0],
-				[-2, 0],
-			],
-		];
-
-		let result = pickRandomPositionSet(positionSets, boats);
-		expect(result).toBe(undefined);
 	});
 });
 
