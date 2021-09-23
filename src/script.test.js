@@ -11,7 +11,7 @@ import {
 	getWestPossiblePositions,
 	getRandomOrigin,
 	outOfBounds,
-	positionsConflict,
+	positionSetInvalid,
 } from "./script.js";
 
 describe("curry", () => {
@@ -249,7 +249,7 @@ describe("outOfBounds", () => {
 	});
 });
 
-describe("positionsConflict", () => {
+describe("positionsInvalid", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -276,16 +276,26 @@ describe("positionsConflict", () => {
 			[5, 5],
 			[4, 5],
 		];
-		expect(positionsConflict(positions, boats)).toBe(true);
+		expect(positionSetInvalid(positions, boats)).toBe(true);
 	});
 
-	test("returns false if array contains no existing boat position", () => {
+	test("returns true if array contains any out of bounds", () => {
+		let positions = [
+			[0, 2],
+			[0, 1],
+			[0, 0],
+			[0, -1],
+		];
+		expect(positionSetInvalid(positions, boats)).toBe(true);
+	});
+
+	test("returns false if array contains no existing boat position and all in bounds", () => {
 		let positions = [
 			[7, 6],
 			[6, 6],
 			[5, 6],
 			[4, 6],
 		];
-		expect(positionsConflict(positions, boats)).toBe(false);
+		expect(positionSetInvalid(positions, boats)).toBe(false);
 	});
 });

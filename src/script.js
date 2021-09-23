@@ -56,12 +56,14 @@ const getSouthPossiblePositions = getPossiblePositions([0, -1]);
 const getEastPossiblePositions = getPossiblePositions([1, 0]);
 const getWestPossiblePositions = getPossiblePositions([-1, 0]);
 
-const positionsConflict = function (positions, boats) {
-	return positions.some((pos) => getMatch(pos, boats));
-};
-
 const outOfBounds = function (array) {
 	return array[0] < 0 || array[1] < 0 || array[0] > 9 || array[1] > 9;
+};
+
+const positionSetInvalid = function (positions, boats) {
+	return positions.some((pos) => {
+		return getMatch(pos, boats) ? true : outOfBounds(pos) ? true : false;
+	});
 };
 
 export {
@@ -76,5 +78,5 @@ export {
 	getWestPossiblePositions,
 	getRandomOrigin,
 	outOfBounds,
-	positionsConflict,
+	positionSetInvalid,
 };
