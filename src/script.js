@@ -18,12 +18,12 @@ const areEqualArrays = curry((array1, array2) => {
 	return array1.every((item, index) => item === array2[index]);
 });
 
-const isHit = function (shot, positions) {
+const setContainsMatch = function (shot, positions) {
 	return positions.some(areEqualArrays(shot));
 };
 
 const getBoatNameIfHit = function (shot, boats) {
-	let result = boats.find((boat) => isHit(shot, boat.positions));
+	let result = boats.find((boat) => setContainsMatch(shot, boat.positions));
 	return result ? result.name : undefined;
 };
 
@@ -91,7 +91,7 @@ const randomBoatPlacement = function (boats, boatLength) {
 export {
 	curry,
 	areEqualArrays,
-	isHit,
+	setContainsMatch,
 	getBoatNameIfHit,
 	getPossiblePositions,
 	getValidPositionSets,

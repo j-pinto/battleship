@@ -2,7 +2,7 @@
 import {
 	curry,
 	areEqualArrays,
-	isHit,
+	setContainsMatch,
 	getBoatNameIfHit,
 	getPossiblePositions,
 	getRandomOrigin,
@@ -59,7 +59,7 @@ describe("areEqualArrays", () => {
 	});
 });
 
-describe("isHit", () => {
+describe("setContainsMatch", () => {
 	test("returns true if position array contains shot array", () => {
 		let positions = [
 			[0, 0],
@@ -67,7 +67,7 @@ describe("isHit", () => {
 			[2, 2],
 		];
 		let shot = [1, 1];
-		expect(isHit(shot, positions)).toBe(true);
+		expect(setContainsMatch(shot, positions)).toBe(true);
 	});
 
 	test("returns false if position array does not contain shot array", () => {
@@ -77,7 +77,7 @@ describe("isHit", () => {
 			[2, 2],
 		];
 		let shot = [1, 2];
-		expect(isHit(shot, positions)).toBe(false);
+		expect(setContainsMatch(shot, positions)).toBe(false);
 	});
 
 	test("returns false if position array and shot array are different lengths", () => {
@@ -87,7 +87,7 @@ describe("isHit", () => {
 			[2, 2],
 		];
 		let shot = [1, 1, 1];
-		expect(isHit(shot, positions)).toBe(false);
+		expect(setContainsMatch(shot, positions)).toBe(false);
 	});
 
 	test("returns false if shot array out of order from a position item with same elements", () => {
@@ -97,7 +97,7 @@ describe("isHit", () => {
 			[2, 2],
 		];
 		let shot = [2, 1];
-		expect(isHit(shot, positions)).toBe(false);
+		expect(setContainsMatch(shot, positions)).toBe(false);
 	});
 });
 
