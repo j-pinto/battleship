@@ -91,8 +91,8 @@ const randomBoatPlacement = function (boats, boatLength) {
 const makeRandomShot = function (prevHits, prevMisses) {
 	let shot = [];
 	do {
-		shot[0] = origin[0] = Math.floor(Math.random() * 10);
-		shot[1] = origin[1] = Math.floor(Math.random() * 10);
+		shot[0] = Math.floor(Math.random() * 10);
+		shot[1] = Math.floor(Math.random() * 10);
 	} while (
 		setContainsMatch(shot, prevHits) ||
 		setContainsMatch(shot, prevMisses)
