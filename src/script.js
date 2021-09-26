@@ -88,6 +88,15 @@ const randomBoatPlacement = function (boats, boatLength) {
 	return chosenPositionSet;
 };
 
+const makeRandomShot = function (prevHits, prevMisses) {
+	let shot = [];
+	do {
+		shot[0] = origin[0] = Math.floor(Math.random() * 10);
+		shot[1] = origin[1] = Math.floor(Math.random() * 10);
+	} while (setContainsMatch(prevHits) || setContainsMatch(prevMisses));
+
+	return shot;
+};
 export {
 	curry,
 	areEqualArrays,
@@ -100,4 +109,5 @@ export {
 	positionSetInvalid,
 	pickRandomPositionSet,
 	randomBoatPlacement,
+	makeRandomShot,
 };
