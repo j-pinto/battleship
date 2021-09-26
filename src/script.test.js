@@ -9,6 +9,7 @@ import {
 	outOfBounds,
 	positionSetInvalid,
 	randomBoatPlacement,
+	makeRandomShot,
 } from "./script.js";
 
 describe("curry", () => {
@@ -300,6 +301,31 @@ describe("randomBoatPlacement", () => {
 			expect(boats[1].positions).not.toContainEqual(result);
 			expect(boats[2].positions).not.toContainEqual(result);
 			expect(boats[3].positions).not.toContainEqual(result);
+		}
+	});
+});
+
+describe("makeRandomShot", () => {
+	test("over many trials, returns random square not contained in previous shot arrays", () => {
+		let prevHits = [
+			[0, 0],
+			[1, 1],
+			[2, 2],
+			[3, 3],
+			[4, 4],
+		];
+		let prevMisses = [
+			[9, 0],
+			[8, 1],
+			[7, 2],
+			[6, 3],
+			[5, 4],
+		];
+
+		for (let i = 0; i < 100; i++) {
+			let shot = makeRandomShot(prevHits, prevMisses);
+			expect(prevHits).not.toContainEqual(shot);
+			expect(prevMisses).not.toContainEqual(shot);
 		}
 	});
 });
