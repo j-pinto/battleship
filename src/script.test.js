@@ -4,7 +4,7 @@ import {
 	areEqualArrays,
 	setContainsMatch,
 	getBoatNameIfHit,
-	getPossiblePositions,
+	getPositionSet,
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
@@ -133,7 +133,7 @@ describe("getBoatNameIfHit", () => {
 	});
 });
 
-describe("getPossiblePositions", () => {
+describe("getPositionSet", () => {
 	test("returns correct array of positions given boatLength and origin", () => {
 		let step = [0, 1],
 			origin = [2, 3],
@@ -144,9 +144,7 @@ describe("getPossiblePositions", () => {
 				[2, 5],
 				[2, 6],
 			];
-		expect(getPossiblePositions(step, origin, boatLength)).toStrictEqual(
-			answer
-		);
+		expect(getPositionSet(step, origin, boatLength)).toStrictEqual(answer);
 	});
 });
 

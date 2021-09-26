@@ -41,7 +41,7 @@ const increment = function (current, step) {
 	return [current[0] + step[0], current[1] + step[1]];
 };
 
-const getPossiblePositions = function (step, origin, boatLength) {
+const getPositionSet = function (step, origin, boatLength) {
 	let coordinate = origin;
 	let array = [coordinate];
 	while (array.length < boatLength) {
@@ -53,10 +53,10 @@ const getPossiblePositions = function (step, origin, boatLength) {
 
 const getValidPositionSets = function (origin, boatLength, boats) {
 	let sets = [];
-	sets.push(getPossiblePositions([0, 1], origin, boatLength));
-	sets.push(getPossiblePositions([0, -1], origin, boatLength));
-	sets.push(getPossiblePositions([1, 0], origin, boatLength));
-	sets.push(getPossiblePositions([-1, 0], origin, boatLength));
+	sets.push(getPositionSet([0, 1], origin, boatLength));
+	sets.push(getPositionSet([0, -1], origin, boatLength));
+	sets.push(getPositionSet([1, 0], origin, boatLength));
+	sets.push(getPositionSet([-1, 0], origin, boatLength));
 
 	let validSets = sets.filter((set) => !positionSetInvalid(set, boats));
 	return validSets.length == 0 ? undefined : validSets;
@@ -106,7 +106,7 @@ export {
 	areEqualArrays,
 	setContainsMatch,
 	getBoatNameIfHit,
-	getPossiblePositions,
+	getPositionSet,
 	getValidPositionSets,
 	getRandomOrigin,
 	outOfBounds,
