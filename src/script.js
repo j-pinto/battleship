@@ -51,7 +51,7 @@ const getPositionSet = function (step, origin, boatLength) {
 	return array;
 };
 
-const getValidPositionSets = function (origin, boatLength, boats) {
+const getAllPositionSets = function (origin, boatLength, boats) {
 	let sets = [];
 	sets.push(getPositionSet([0, 1], origin, boatLength));
 	sets.push(getPositionSet([0, -1], origin, boatLength));
@@ -81,7 +81,7 @@ const randomBoatPlacement = function (boats, boatLength) {
 	let positionSets;
 	do {
 		let origin = getRandomOrigin(boats);
-		positionSets = getValidPositionSets(origin, boatLength, boats);
+		positionSets = getAllPositionSets(origin, boatLength, boats);
 	} while (positionSets == undefined);
 
 	let chosenPositionSet = pickRandomPositionSet(positionSets);
@@ -107,7 +107,7 @@ export {
 	setContainsMatch,
 	getBoatNameIfHit,
 	getPositionSet,
-	getValidPositionSets,
+	getAllPositionSets,
 	getRandomOrigin,
 	outOfBounds,
 	positionSetInvalid,
