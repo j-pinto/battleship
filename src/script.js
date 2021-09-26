@@ -61,6 +61,25 @@ const getAllPositionSets = curry((boatLength, origin) => {
 	return sets;
 });
 
+const getInvestigationSets = getAllPositionSets(10);
+
+const filterInvestigation = function (sets, prevShots) {
+	sets.forEach((set, index, sets) => {
+		set.shift();
+		let filteredSet = set.filter((pos) => !outOfBounds(pos));
+		let stopIndex = filteredSet.findIndex((pos) =>
+			setContainsMatch(pos, prevShots)
+		);
+		if (stopIndex > -1) {
+			sets[index] = filteredSet.slice(0, stopIndex);
+		} else {
+			sets[index] = filteredSet;
+		}
+	});
+
+	return sets;
+};
+
 const filterInvalidSets = function (sets, boats) {
 	let validSets = sets.filter((set) => !positionSetInvalid(set, boats));
 	return validSets.length == 0 ? undefined : validSets;
@@ -106,6 +125,12 @@ const makeRandomShot = function (prevHits, prevMisses) {
 	return shot;
 };
 
+const generateInvestigation = function (hit, prevShots) {
+	let sets = getInvestigationSets(hit);
+	let filteredSets = filterInvestigation(sets, prevShots);
+	return filteredSets;
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -120,4 +145,5 @@ export {
 	pickRandomPositionSet,
 	randomBoatPlacement,
 	makeRandomShot,
+	generateInvestigation,
 };

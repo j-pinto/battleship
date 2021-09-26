@@ -10,6 +10,7 @@ import {
 	positionSetInvalid,
 	randomBoatPlacement,
 	makeRandomShot,
+	generateInvestigation,
 } from "./script.js";
 
 describe("curry", () => {
@@ -325,5 +326,35 @@ describe("makeRandomShot", () => {
 			expect(prevHits).not.toContainEqual(shot);
 			expect(prevMisses).not.toContainEqual(shot);
 		}
+	});
+});
+
+describe("generateInvestigation", () => {
+	test("returns correct set of squares to investigate for given hit", () => {
+		let prevShots = [
+			[0, 0],
+			[1, 1],
+			[2, 2],
+			[3, 3],
+			[4, 4],
+		];
+
+		let hit = [4, 2];
+		let result = [
+			[[4, 3]],
+			[
+				[4, 1],
+				[4, 0],
+			],
+			[
+				[5, 2],
+				[6, 2],
+				[7, 2],
+				[8, 2],
+				[9, 2],
+			],
+			[[3, 2]],
+		];
+		expect(generateInvestigation(hit, prevShots)).toMatchObject(result);
 	});
 });
