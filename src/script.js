@@ -51,7 +51,7 @@ const getPositionSet = function (step, origin, boatLength) {
 	return array;
 };
 
-const getAllPositionSets = function (boatLength, origin) {
+const getAllPositionSets = curry((boatLength, origin) => {
 	let sets = [];
 	sets.push(getPositionSet([0, 1], origin, boatLength));
 	sets.push(getPositionSet([0, -1], origin, boatLength));
@@ -59,7 +59,7 @@ const getAllPositionSets = function (boatLength, origin) {
 	sets.push(getPositionSet([-1, 0], origin, boatLength));
 
 	return sets;
-};
+});
 
 const filterInvalidSets = function (sets, boats) {
 	let validSets = sets.filter((set) => !positionSetInvalid(set, boats));
