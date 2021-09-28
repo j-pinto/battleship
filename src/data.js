@@ -39,6 +39,15 @@ const computerFactory = function () {
 	computer.investigating = false;
 	computer.investigationSets = [];
 
+	computer.switchInvestigationDirection = function () {
+		computer.investigationSets.shift();
+	};
+
+	computer.endInvestigation = function () {
+		computer.investigationSets = [];
+		computer.investigating = false;
+	};
+
 	return computer;
 };
 
