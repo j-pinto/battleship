@@ -9,6 +9,7 @@ const boatFactory = function (title, len) {
 };
 
 const playerFactory = function () {
+	//private properties (not included in returned object)
 	let boats = [
 		boatFactory("carrier", 5),
 		boatFactory("battleship", 4),
@@ -21,6 +22,13 @@ const playerFactory = function () {
 	let previousMisses = [];
 	let previousShots = [];
 
+	//public getter methods (are included in returned object)
+	const getAllBoats = () => boats;
+	const getPrevHits = () => previousHits;
+	const getPrevMisses = () => previousMisses;
+	const getPrevShots = () => previousShots;
+
+	//other public methods (are included in returned object)
 	const addHit = function (shot) {
 		previousHits.push(shot);
 		previousShots.push(shot);
@@ -31,7 +39,14 @@ const playerFactory = function () {
 		previousShots.push(shot);
 	};
 
-	return { boats, previousHits, previousShots, addHit, addMiss };
+	return {
+		getAllBoats,
+		getPrevHits,
+		getPrevMisses,
+		getPrevShots,
+		addHit,
+		addMiss,
+	};
 };
 
 const computerFactory = function () {
