@@ -18,6 +18,7 @@ const playerFactory = function () {
 	];
 
 	let previousHits = [];
+	let previousMisses = [];
 	let previousShots = [];
 
 	const addHit = function (shot) {
@@ -26,6 +27,7 @@ const playerFactory = function () {
 	};
 
 	const addMiss = function (shot) {
+		previousMisses.push(shot);
 		previousShots.push(shot);
 	};
 
