@@ -20,7 +20,16 @@ const playerFactory = function () {
 	let previousHits = [];
 	let previousShots = [];
 
-	return { boats, previousHits, previousShots };
+	const addHit = function (shot) {
+		previousHits.push(shot);
+		previousShots.push(shot);
+	};
+
+	const addMiss = function (shot) {
+		previousShots.push(shot);
+	};
+
+	return { boats, previousHits, previousShots, addHit, addMiss };
 };
 
 const computerFactory = function () {
