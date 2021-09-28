@@ -306,14 +306,12 @@ describe("randomBoatPlacement", () => {
 
 describe("makeRandomShot", () => {
 	test("over many trials, returns random square not contained in previous shot arrays", () => {
-		let prevHits = [
+		let prevShots = [
 			[0, 0],
 			[1, 1],
 			[2, 2],
 			[3, 3],
 			[4, 4],
-		];
-		let prevMisses = [
 			[9, 0],
 			[8, 1],
 			[7, 2],
@@ -322,9 +320,8 @@ describe("makeRandomShot", () => {
 		];
 
 		for (let i = 0; i < 100; i++) {
-			let shot = makeRandomShot(prevHits, prevMisses);
-			expect(prevHits).not.toContainEqual(shot);
-			expect(prevMisses).not.toContainEqual(shot);
+			let shot = makeRandomShot(prevShots);
+			expect(prevShots).not.toContainEqual(shot);
 		}
 	});
 });

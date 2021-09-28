@@ -112,15 +112,12 @@ const randomBoatPlacement = function (boats, boatLength) {
 	return chosenPositionSet;
 };
 
-const makeRandomShot = function (prevHits, prevMisses) {
+const makeRandomShot = function (prevShots) {
 	let shot = [];
 	do {
 		shot[0] = Math.floor(Math.random() * 10);
 		shot[1] = Math.floor(Math.random() * 10);
-	} while (
-		setContainsMatch(shot, prevHits) ||
-		setContainsMatch(shot, prevMisses)
-	);
+	} while (setContainsMatch(shot, prevShots));
 
 	return shot;
 };
