@@ -51,19 +51,34 @@ const playerFactory = function () {
 
 const computerFactory = function () {
 	let computer = playerFactory();
-	computer.investigating = false;
-	computer.investigationSets = [];
 
-	computer.switchInvestigationDirection = function () {
-		computer.investigationSets.shift();
+	//additional private properties for computer object
+	//(not inherited, not included in return object)
+	let investigating = false;
+	let investigationSets = [];
+
+	//public methods (are included in returned object)
+	const isInvestigating = () => investigating;
+
+	const startInvestigation = function (newSets) {
+		investigationSets = newSets;
+		investigating = true;
 	};
 
-	computer.endInvestigation = function () {
-		computer.investigationSets = [];
-		computer.investigating = false;
+	const endInvestigation = function () {
+		investigationSets = [];
+		investigating = false;
 	};
 
-	return computer;
+	const switchInvestigationDirection = () => investigationSets.shift();
+
+	return {
+		...computer,
+		isInvestigating,
+		startInvestigation,
+		endInvestigation,
+		switchInvestigationDirection,
+	};
 };
 
 export { boatFactory, playerFactory, computerFactory };
