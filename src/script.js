@@ -1,17 +1,6 @@
 "use strict";
 import "./style.css";
-
-const curry = function (func) {
-	return function curried(...args) {
-		if (args.length >= func.length) {
-			return func.apply(this, args);
-		} else {
-			return function (...args2) {
-				return curried.apply(this, args.concat(args2));
-			};
-		}
-	};
-};
+import { curry } from "./curry.js";
 
 const areEqualArrays = curry((array1, array2) => {
 	if (array1.length != array2.length) return false;
