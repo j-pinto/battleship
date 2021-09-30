@@ -7,6 +7,11 @@ const game = (() => {
 	const computer = computerFactory();
 	let turnCount = 0;
 
+	const init = function () {
+		player.placeAllBoatsRandomly();
+		computer.placeAllBoatsRandomly();
+	};
+
 	const getCurrentPlayer = function () {
 		return turnCount % 2 === 0 ? player : computer;
 	};
@@ -15,5 +20,5 @@ const game = (() => {
 		return turnCount % 2 === 0 ? computer : player;
 	};
 
-	return { player, computer, turnCount };
+	return { init };
 })();
