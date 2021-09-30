@@ -41,6 +41,11 @@ const playerFactory = function () {
 		previousShots.push(shot);
 	};
 
+	const placeSingleBoat = (boatName, positionSet) => {
+		let boat = boats.find((boat) => boat.name == boatName);
+		boat.positions = positionSet;
+	};
+
 	const placeAllBoatsRandomly = () => {
 		let boats = getAllBoats();
 		boats.forEach((boat) => {
@@ -55,6 +60,7 @@ const playerFactory = function () {
 		getPrevShots,
 		addHit,
 		addMiss,
+		placeSingleBoat,
 		placeAllBoatsRandomly,
 	};
 };
