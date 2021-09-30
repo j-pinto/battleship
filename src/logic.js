@@ -119,6 +119,10 @@ const generateInvestigation = function (hit, prevShots) {
 	return filteredSets;
 };
 
+const gameOver = function (boats) {
+	return boats.every((boat) => boat.sunk === true);
+};
+
 export {
 	curry,
 	areEqualArrays,
@@ -135,4 +139,5 @@ export {
 	makeRandomShot,
 	generateInvestigation,
 	boatSunk,
+	gameOver,
 };
