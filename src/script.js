@@ -22,11 +22,16 @@ const game = (() => {
 	};
 
 	const takeTurn = function () {
+		// turn setup
 		let currentPlayer = getCurrentPlayer();
-		let enemyPlayer = getEnemyPlayer();
 		let prevShots = currentPlayer.getPrevShots();
-		let shot = makeRandomShot(prevShots);
+		let enemyPlayer = getEnemyPlayer();
 		let enemyBoats = enemyPlayer.getAllBoats();
+
+		// shot
+		let shot = makeRandomShot(prevShots);
+
+		// data updates
 		let hitBoatName = getBoatNameIfHit(shot, enemyBoats);
 		if (hitBoatName) {
 			currentPlayer.addPrevHit(shot);
