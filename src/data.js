@@ -99,6 +99,10 @@ const computerFactory = function () {
 		investigating = false;
 	};
 
+	const getNextInvestigationShot = function () {
+		return investigationSets[0][0];
+	};
+
 	const switchInvestigationDirection = () => investigationSets.shift();
 
 	return {
@@ -106,6 +110,7 @@ const computerFactory = function () {
 		isInvestigating,
 		startInvestigation,
 		endInvestigation,
+		getNextInvestigationShot,
 		switchInvestigationDirection,
 	};
 };
