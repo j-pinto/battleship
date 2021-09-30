@@ -1,3 +1,5 @@
+import { randomBoatPlacement } from "./logic.js";
+
 const boatFactory = function (title, len) {
 	let name = title;
 	let length = len;
@@ -39,6 +41,13 @@ const playerFactory = function () {
 		previousShots.push(shot);
 	};
 
+	const placeAllBoatsRandomly = () => {
+		let boats = getAllBoats();
+		boats.forEach((boat) => {
+			boat.positions = randomBoatPlacement(boats, boat.length);
+		});
+	};
+
 	return {
 		getAllBoats,
 		getPrevHits,
@@ -46,6 +55,7 @@ const playerFactory = function () {
 		getPrevShots,
 		addHit,
 		addMiss,
+		placeAllBoatsRandomly,
 	};
 };
 
