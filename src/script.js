@@ -7,5 +7,13 @@ const game = (() => {
 	const computer = computerFactory();
 	let turnCount = 0;
 
+	const getCurrentPlayer = function () {
+		return turnCount % 2 === 0 ? player : computer;
+	};
+
+	const getEnemyPlayer = function () {
+		return turnCount % 2 === 0 ? computer : player;
+	};
+
 	return { player, computer, turnCount };
 })();
