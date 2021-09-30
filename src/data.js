@@ -37,7 +37,6 @@ const playerFactory = function () {
 
 		let boat = boats.find((boat) => boat.name == boatName);
 		boat.hits++;
-		boat.hits >= boat.length ? (boat.sunk = true) : (boat.sunk = false);
 	};
 
 	const addMiss = function (shot) {

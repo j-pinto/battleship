@@ -109,6 +109,10 @@ const makeRandomShot = function (prevShots) {
 	return shot;
 };
 
+const boatSunk = function (boat) {
+	return boat.hits >= boat.length ? true : false;
+};
+
 const generateInvestigation = function (hit, prevShots) {
 	let sets = getInvestigationSets(hit);
 	let filteredSets = filterInvestigation(sets, prevShots);
@@ -130,4 +134,5 @@ export {
 	randomBoatPlacement,
 	makeRandomShot,
 	generateInvestigation,
+	boatSunk,
 };
