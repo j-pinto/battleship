@@ -11,7 +11,7 @@ import {
 	randomBoatPlacement,
 	makeRandomShot,
 	generateInvestigation,
-} from "./script.js";
+} from "./logic.js";
 
 describe("curry", () => {
 	test("curried func works with args passed separately", () => {
