@@ -100,7 +100,7 @@ const computerFactory = function () {
 	};
 
 	const getNextInvestigationShot = function () {
-		return investigationSets[0][0];
+		return investigationSets[0].shift();
 	};
 
 	const switchInvestigationDirection = () => investigationSets.shift();
