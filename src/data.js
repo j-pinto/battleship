@@ -32,12 +32,9 @@ const playerFactory = function () {
 	const getBoatByName = (name) => boats.find((boat) => boat.name == name);
 
 	//other public methods (are included in returned object)
-	const addPrevHit = function (shot, boatName) {
+	const addPrevHit = function (shot) {
 		previousHits.push(shot);
 		previousShots.push(shot);
-
-		let boat = getBoatByName(boatName);
-		boat.hits++;
 	};
 
 	const addPrevMiss = function (shot) {
@@ -57,6 +54,11 @@ const playerFactory = function () {
 		});
 	};
 
+	const registerHit = function (boatName) {
+		let boat = getBoatByName(boatName);
+		boat.hits++;
+	};
+
 	return {
 		getAllBoats,
 		getPrevHits,
@@ -66,6 +68,7 @@ const playerFactory = function () {
 		addPrevMiss,
 		placeSingleBoat,
 		placeAllBoatsRandomly,
+		registerHit,
 	};
 };
 
