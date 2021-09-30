@@ -29,13 +29,14 @@ const playerFactory = function () {
 	const getPrevHits = () => previousHits;
 	const getPrevMisses = () => previousMisses;
 	const getPrevShots = () => previousShots;
+	const getBoatByName = (name) => boats.find((boat) => boat.name == name);
 
 	//other public methods (are included in returned object)
 	const addHit = function (shot, boatName) {
 		previousHits.push(shot);
 		previousShots.push(shot);
 
-		let boat = boats.find((boat) => boat.name == boatName);
+		let boat = getBoatByName(boatName);
 		boat.hits++;
 	};
 
@@ -45,7 +46,7 @@ const playerFactory = function () {
 	};
 
 	const placeSingleBoat = (boatName, positionSet) => {
-		let boat = boats.find((boat) => boat.name == boatName);
+		let boat = getBoatByName(boatName);
 		boat.positions = positionSet;
 	};
 
