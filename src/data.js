@@ -59,8 +59,13 @@ const playerFactory = function () {
 		boat.hits++;
 	};
 
+	const sinkBoat = function (boat) {
+		boat.sunk = true;
+	};
+
 	return {
 		getAllBoats,
+		getBoatByName,
 		getPrevHits,
 		getPrevMisses,
 		getPrevShots,
@@ -69,6 +74,7 @@ const playerFactory = function () {
 		placeSingleBoat,
 		placeAllBoatsRandomly,
 		registerHit,
+		sinkBoat,
 	};
 };
 
