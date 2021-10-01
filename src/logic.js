@@ -113,7 +113,8 @@ const makeRandomShot = function (prevShots) {
 	return shot;
 };
 
-const boatSunk = function (boat) {
+const boatSunk = function (boatName, boats) {
+	let boat = boats.find((boat) => boat.name === boatName);
 	return boat.hits >= boat.length ? true : false;
 };
 
