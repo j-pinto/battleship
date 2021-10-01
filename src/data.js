@@ -59,7 +59,8 @@ const playerFactory = function () {
 		boat.hits++;
 	};
 
-	const sinkBoat = function (boat) {
+	const sinkBoat = function (boatName) {
+		let boat = getBoatByName(boatName);
 		boat.sunk = true;
 	};
 
