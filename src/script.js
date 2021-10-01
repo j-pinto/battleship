@@ -1,7 +1,12 @@
 "use strict";
 import "./style.css";
 import { playerFactory, computerFactory } from "./data.js";
-import { makeRandomShot, getBoatNameIfHit, boatSunk } from "./logic.js";
+import {
+	makeRandomShot,
+	getBoatNameIfHit,
+	boatSunk,
+	gameOver,
+} from "./logic.js";
 
 const game = (() => {
 	const player = playerFactory();
