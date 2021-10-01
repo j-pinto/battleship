@@ -3,6 +3,7 @@ import {
 	curry,
 	areEqualArrays,
 	setContainsMatch,
+	isHit,
 	getBoatNameIfHit,
 	getPositionSet,
 	getRandomOrigin,
@@ -100,6 +101,36 @@ describe("setContainsMatch", () => {
 		];
 		let shot = [2, 1];
 		expect(setContainsMatch(shot, positions)).toBe(false);
+	});
+});
+
+describe("isHit", () => {
+	let boats = [
+		{
+			name: "carrier",
+			positions: [
+				[0, 0],
+				[0, 1],
+				[0, 2],
+			],
+		},
+		{
+			name: "destroyer",
+			positions: [
+				[1, 0],
+				[1, 1],
+				[1, 2],
+			],
+		},
+	];
+	test("returns true if shot is a hit", () => {
+		let shot = [1, 0];
+		expect(isHit(shot, boats)).toBe(true);
+	});
+
+	test("returns false if shot is a miss", () => {
+		let shot = [0, 3];
+		expect(isHit(shot, boats)).toBe(false);
 	});
 });
 

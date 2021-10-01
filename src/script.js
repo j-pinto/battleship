@@ -49,7 +49,7 @@ const game = (() => {
 		else if players turn
 		  take shot input (implement later, random shot for now)
     
-		determine hit (new function??? rework getting boat name if hit???)
+		determine hit
 
 		update hit data or miss data
 

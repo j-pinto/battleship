@@ -9,6 +9,10 @@ const setContainsMatch = function (shot, positions) {
 	return positions.some(areEqualArrays(shot));
 };
 
+const isHit = function (shot, boats) {
+	return boats.some((boat) => setContainsMatch(shot, boat.positions));
+};
+
 const getBoatNameIfHit = function (shot, boats) {
 	let result = boats.find((boat) => setContainsMatch(shot, boat.positions));
 	return result ? result.name : undefined;
@@ -127,6 +131,7 @@ export {
 	curry,
 	areEqualArrays,
 	setContainsMatch,
+	isHit,
 	getBoatNameIfHit,
 	getPositionSet,
 	getAllPositionSets,
