@@ -33,21 +33,35 @@ const game = (() => {
 		let enemyPlayer = getEnemyPlayer();
 		let enemyBoats = enemyPlayer.getAllBoats();
 
-		// shot
-		let shot = makeRandomShot(prevShots);
+		let shot = undefined;
+		let hit = false;
+		let sink = false;
+		let investigating = false;
 
-		// data updates
-		let hitBoatName = getBoatNameIfHit(shot, enemyBoats);
-		if (hitBoatName) {
-			currentPlayer.addPrevHit(shot);
-			enemyPlayer.registerHit(hitBoatName);
-			let boat = enemyPlayer.getBoatByName(hitBoatName);
-			if (boatSunk(boat)) {
-				enemyPlayer.sinkBoat(boat);
-			}
-		} else {
-			currentPlayer.addPrevMiss(shot);
-		}
+		/*
+		//determine if investigating
+
+		if computers turn
+		  determine shot
+		  next inv shot if investigating
+		  else random shot
+
+		else if players turn
+		  take shot input (implement later, random shot for now)
+    
+		determine hit (new function??? rework getting boat name if hit???)
+
+		update hit data or miss data
+
+		update sink data
+
+		update investigation
+      next inv shot
+      if sink
+        end inv
+      if miss
+        switch dir  
+    */
 
 		turnCount++;
 	};
