@@ -402,9 +402,9 @@ describe("game.takeTurn()", () => {
 		);
 
 		if (gameOver(game.player.getAllBoats())) {
-			winner = "player";
-		} else if (gameOver(game.computer.getAllBoats())) {
 			winner = "computer";
+		} else if (gameOver(game.computer.getAllBoats())) {
+			winner = "player";
 		}
 
 		let validResults = ["player", "computer"];
