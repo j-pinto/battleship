@@ -67,11 +67,9 @@ const filterInvestigation = function (sets, prevShots) {
 		} else {
 			sets[index] = filteredSet;
 		}
-
-		if (sets[index].length == 0) {
-			sets.splice(index, 1);
-		}
 	});
+
+	sets = sets.filter((set) => set.length > 0);
 
 	return sets;
 };
