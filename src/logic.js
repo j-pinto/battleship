@@ -61,10 +61,15 @@ const filterInvestigation = function (sets, prevShots) {
 		let stopIndex = filteredSet.findIndex((pos) =>
 			setContainsMatch(pos, prevShots)
 		);
+
 		if (stopIndex > -1) {
 			sets[index] = filteredSet.slice(0, stopIndex);
 		} else {
 			sets[index] = filteredSet;
+		}
+
+		if (sets[index].length == 0) {
+			sets.splice(index, 1);
 		}
 	});
 
