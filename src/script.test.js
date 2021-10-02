@@ -366,6 +366,7 @@ describe("generateInvestigation", () => {
 			[0, 0],
 			[1, 1],
 			[2, 2],
+			[3, 2],
 			[3, 3],
 			[4, 4],
 		];
@@ -384,7 +385,6 @@ describe("generateInvestigation", () => {
 				[8, 2],
 				[9, 2],
 			],
-			[[3, 2]],
 		];
 		expect(generateInvestigation(hit, prevShots)).toMatchObject(result);
 	});
