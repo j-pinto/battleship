@@ -6,6 +6,7 @@ import {
 	getBoatNameIfHit,
 	boatSunk,
 	gameOver,
+	isHit,
 } from "./logic.js";
 
 const game = (() => {
@@ -38,25 +39,39 @@ const game = (() => {
 		let sink = false;
 		let investigating = false;
 
+		////////// IGNORE THIS BLOCK FOR NOW ///////
 		/*
-		//determine if investigating
-
 		if computers turn
-		  determine shot
-		  next inv shot if investigating
+      determine if investigating
+        next inv shot if investigating
 		  else random shot
-
 		else if players turn
 		  take shot input (implement later, random shot for now)
-    
-		determine hit
+    */
+		////////////////////////////////////////////
 
-		update hit data or miss data
+		// "determine shot"
+		shot = makeRandomShot(prevShots);
 
-		update sink data
+		// update hit data or miss data
+		hit = isHit(shot, enemyBoats);
+		let hitBoatName;
+		if (hit) {
+			currentPlayer.addPrevHit(shot);
+			hitBoatName = getBoatNameIfHit(shot, enemyBoats);
+			enemyPlayer.registerHit(hitBoatName);
+			sink = boatSunk(hitBoatName, enemyBoats);
+		} else {
+			currentPlayer.addPrevMiss(shot);
+		}
 
+		// update sink data
+		if (sink) {
+			enemyPlayer.sinkBoat(hitBoatName);
+		}
+
+		/*
 		update investigation
-      next inv shot
       if sink
         end inv
       if miss
@@ -68,3 +83,5 @@ const game = (() => {
 
 	return { player, computer, init, takeTurn };
 })();
+
+export { game };

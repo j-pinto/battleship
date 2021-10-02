@@ -12,7 +12,10 @@ import {
 	randomBoatPlacement,
 	makeRandomShot,
 	generateInvestigation,
+	gameOver,
 } from "./logic.js";
+
+import { game } from "./script.js";
 
 describe("curry", () => {
 	test("curried func works with args passed separately", () => {
@@ -384,5 +387,28 @@ describe("generateInvestigation", () => {
 			[[3, 2]],
 		];
 		expect(generateInvestigation(hit, prevShots)).toMatchObject(result);
+	});
+});
+
+describe("game.takeTurn()", () => {
+	test("always produces a winner", () => {
+		let winner = undefined;
+		game.init();
+		do {
+			game.takeTurn();
+		} while (
+			!gameOver(game.player.getAllBoats()) &&
+			!gameOver(game.computer.getAllBoats())
+		);
+
+		if (gameOver(game.player.getAllBoats())) {
+			winner = "player";
+		} else if (gameOver(game.computer.getAllBoats())) {
+			winner = "computer";
+		}
+
+		let validResults = ["player", "computer"];
+		expect(winner).not.toBe(undefined);
+		expect(validResults).toContain(winner);
 	});
 });
