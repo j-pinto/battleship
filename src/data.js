@@ -147,7 +147,7 @@ const computerFactory = function () {
 	};
 
 	const getNextInvestigationShot = function () {
-		if (currentShot == []) {
+		if (currentShot.length == 0) {
 			currentShot = origin;
 		}
 		currentShot = increment(currentShot, currentStep);
