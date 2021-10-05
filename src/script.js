@@ -31,7 +31,6 @@ const game = (() => {
 		let shot = undefined;
 		let hit = false;
 		let sink = false;
-		let investigating = false;
 
 		////////// IGNORE THIS BLOCK FOR NOW ///////
 		/*

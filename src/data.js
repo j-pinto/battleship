@@ -85,35 +85,31 @@ const computerFactory = function () {
 	//additional private properties for computer object
 	//(not inherited, not included in return object)
 	let investigating = false;
-	let investigationSets = [];
 
 	//public methods (are included in returned object)
 	const isInvestigating = () => investigating;
 
-	const startInvestigation = function (newSets) {
-		investigationSets = newSets;
-		investigating = true;
+	const startInvestigation = function () {
+		// TODO
 	};
 
 	const endInvestigation = function () {
-		investigationSets = [];
-		investigating = false;
+		// TODO
 	};
-
-	const getInvestigationSets = () => investigationSets;
 
 	const getNextInvestigationShot = function () {
-		return investigationSets[0].shift();
+		// TODO
 	};
 
-	const switchInvestigationDirection = () => investigationSets.shift();
+	const switchInvestigationDirection = function () {
+		// TODO
+	};
 
 	return {
 		...computer,
 		isInvestigating,
 		startInvestigation,
 		endInvestigation,
-		getInvestigationSets,
 		getNextInvestigationShot,
 		switchInvestigationDirection,
 	};
