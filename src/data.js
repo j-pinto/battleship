@@ -1,4 +1,4 @@
-import { randomBoatPlacement } from "./logic.js";
+import { randomBoatPlacement, increment } from "./logic.js";
 
 const boatFactory = function (title, len) {
 	let name = title;
@@ -91,7 +91,7 @@ const computerFactory = function () {
 		[1, 0],
 		[-1, 0],
 	];
-	let currentOrigin = [];
+	let currentShot = [];
 	let currentStep = [];
 	let currentInvHits = [];
 	let futureInvestigation = [];
@@ -101,7 +101,7 @@ const computerFactory = function () {
 
 	const startNewInvestigation = function (newHit) {
 		investigating = true;
-		currentOrigin = newHit;
+		currentShot = newHit;
 		currentInvHits.push(newHit);
 		currentStep = investigationSteps[0];
 	};
@@ -111,7 +111,8 @@ const computerFactory = function () {
 	};
 
 	const getNextInvestigationShot = function () {
-		// TODO
+		let nextShot = increment(currentShot, currentStep);
+		return nextShot;
 	};
 
 	const switchInvestigationDirection = function () {
