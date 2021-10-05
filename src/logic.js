@@ -107,6 +107,7 @@ export {
 	curry,
 	areEqualArrays,
 	setContainsMatch,
+	increment,
 	isHit,
 	getBoatNameIfHit,
 	getPositionSet,

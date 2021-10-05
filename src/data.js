@@ -91,6 +91,7 @@ const computerFactory = function () {
 		[1, 0],
 		[-1, 0],
 	];
+	let origin = [];
 	let currentShot = [];
 	let currentStep = [];
 	let currentInvHits = [];
@@ -101,7 +102,7 @@ const computerFactory = function () {
 
 	const startNewInvestigation = function (newHit) {
 		investigating = true;
-		currentShot = newHit;
+		origin = newHit;
 		currentStep = investigationSteps[0];
 		currentInvHits.push(newHit);
 	};
@@ -119,18 +120,20 @@ const computerFactory = function () {
 			setContainsMatch(shot, sunkBoatPositions)
 		);
 
+		origin = [];
 		currentShot = [];
 		currentStep = [];
 		currentInvHits = [];
 	};
 
 	const resumeInvestigation = function () {
-		currentShot = futureInvestigation.shift();
+		origin = futureInvestigation.shift();
 		currentStep = investigationSteps[0];
 	};
 
 	const endInvestigation = function () {
 		investigating = false;
+		origin = [];
 		currentShot = [];
 		currentStep = [];
 		currentInvHits = [];
@@ -142,7 +145,10 @@ const computerFactory = function () {
 	};
 
 	const getNextInvestigationShot = function () {
-		let currentShot = increment(currentShot, currentStep);
+		if (currentShot == []) {
+			currentShot = origin;
+		}
+		currentShot = increment(currentShot, currentStep);
 		return currentShot;
 	};
 
@@ -151,6 +157,7 @@ const computerFactory = function () {
 	};
 
 	const switchInvestigationDirection = function () {
+		currentShot = origin;
 		let index = investigationSteps.findIndex((step) => step == currentStep);
 		currentStep = investigationSteps[index++];
 	};
