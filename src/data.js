@@ -103,8 +103,8 @@ const computerFactory = function () {
 	const startNewInvestigation = function (newHit) {
 		investigating = true;
 		origin = newHit;
-		currentStep = investigationSteps[0];
 		currentInvHits.push(newHit);
+		currentStep = investigationSteps[0];
 	};
 
 	const suspendInvestigation = function (sunkBoatLength) {
@@ -127,7 +127,9 @@ const computerFactory = function () {
 	};
 
 	const resumeInvestigation = function () {
-		origin = futureInvestigation.shift();
+		let resumeStartingPoint = futureInvestigation.shift();
+		origin = resumeStartingPoint;
+		currentInvHits.push(resumeStartingPoint);
 		currentStep = investigationSteps[0];
 	};
 

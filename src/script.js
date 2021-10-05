@@ -36,6 +36,10 @@ const game = (() => {
 		let enemyPlayer = getEnemyPlayer();
 		let shot = makeRandomShot(prevShots);
 		updateData(currentPlayer, enemyPlayer, shot);
+
+		if (isHit(shot, enemyPlayer.getAllBoats())) {
+			currentPlayer.startNewInvestigation(shot);
+		}
 	};
 
 	const updateData = function (currentPlayer, enemyPlayer, shot) {
