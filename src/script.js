@@ -121,7 +121,17 @@ const game = (() => {
 		turnCount++;
 	};
 
-	return { player, computer, init, takeTurn };
+	return {
+		player,
+		computer,
+		init,
+		takeTurn,
+		playerTurn,
+		computerTurn,
+		investigate,
+		updateData,
+		updateInvestigation,
+	};
 })();
 
 export { game };
