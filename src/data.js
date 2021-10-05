@@ -142,7 +142,6 @@ const computerFactory = function () {
 	};
 
 	const addInvestigationHit = function (shot) {
-		computer.addPrevHit(shot);
 		currentInvHits.push(shot);
 	};
 
