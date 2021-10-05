@@ -107,7 +107,7 @@ const computerFactory = function () {
 		currentStep = investigationSteps[0];
 	};
 
-	const suspendInvestigation = function (sunkBoatLength) {
+	const determineFutureInv = function (sunkBoatLength) {
 		//get all sunkBoat hits
 		let invertedStep = [currentStep[0] * -1, currentStep[1] * -1];
 		let sunkBoatPositions = [];
@@ -120,6 +120,10 @@ const computerFactory = function () {
 			setContainsMatch(shot, sunkBoatPositions)
 		);
 
+		return futureInvestigation;
+	};
+
+	const suspendInvestigation = function () {
 		origin = [];
 		currentShot = [];
 		currentStep = [];
@@ -134,11 +138,8 @@ const computerFactory = function () {
 	};
 
 	const endInvestigation = function () {
+		suspendInvestigation();
 		investigating = false;
-		origin = [];
-		currentShot = [];
-		currentStep = [];
-		currentInvHits = [];
 	};
 
 	const addInvestigationHit = function (shot) {
@@ -167,6 +168,7 @@ const computerFactory = function () {
 		...computer,
 		isInvestigating,
 		startNewInvestigation,
+		determineFutureInv,
 		suspendInvestigation,
 		resumeInvestigation,
 		endInvestigation,
