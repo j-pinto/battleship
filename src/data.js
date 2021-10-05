@@ -85,6 +85,12 @@ const computerFactory = function () {
 	//additional private properties for computer object
 	//(not inherited, not included in return object)
 	let investigating = false;
+	const investigationSteps = [
+		[0, 1],
+		[0, -1],
+		[1, 0],
+		[-1, 0],
+	];
 
 	//public methods (are included in returned object)
 	const isInvestigating = () => investigating;
