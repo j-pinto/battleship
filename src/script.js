@@ -42,10 +42,6 @@ const game = (() => {
 		let enemyPlayer = getEnemyPlayer();
 		let shot = makeRandomShot(prevShots);
 		updateData(currentPlayer, enemyPlayer, shot);
-
-		if (isHit(shot, enemyPlayer.getAllBoats())) {
-			currentPlayer.startNewInvestigation(shot);
-		}
 	};
 
 	const investigate = function (currentPlayer) {
@@ -73,6 +69,9 @@ const game = (() => {
 			sink = boatSunk(hitBoatName, enemyBoats);
 			if (sink) {
 				enemyPlayer.sinkBoat(hitBoatName);
+			}
+			if (currentPlayer == computer && !currentPlayer.isInvestigating()) {
+				currentPlayer.startNewInvestigation(shot);
 			}
 		} else {
 			currentPlayer.addPrevMiss(shot);
