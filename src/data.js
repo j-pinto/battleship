@@ -164,6 +164,17 @@ const computerFactory = function () {
 		currentStep = investigationSteps[index++];
 	};
 
+	const getInvInfo = function () {
+		return {
+			investigating: investigating,
+			origin: origin,
+			currentShot: currentShot,
+			currentStep: currentStep,
+			currentInvHits: currentInvHits,
+			futureInvestigation: futureInvestigation,
+		};
+	};
+
 	return {
 		...computer,
 		isInvestigating,
@@ -176,6 +187,7 @@ const computerFactory = function () {
 		getNextInvestigationShot,
 		onLastInvestigationPath,
 		switchInvestigationDirection,
+		getInvInfo,
 	};
 };
 
