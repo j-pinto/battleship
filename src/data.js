@@ -107,7 +107,10 @@ const computerFactory = function () {
 	};
 
 	const endInvestigation = function () {
-		// TODO
+		investigating = false;
+		currentShot = [];
+		currentStep = [];
+		currentInvHits = [];
 	};
 
 	const getNextInvestigationShot = function () {
