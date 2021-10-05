@@ -102,8 +102,14 @@ const computerFactory = function () {
 	const startNewInvestigation = function (newHit) {
 		investigating = true;
 		currentShot = newHit;
-		currentInvHits.push(newHit);
 		currentStep = investigationSteps[0];
+		currentInvHits.push(newHit);
+	};
+
+	const resumeInvestigation = function () {
+		currentShot = futureInvestigation.shift();
+		currentStep = investigationSteps[0];
+		currentInvHits.push(currentShot);
 	};
 
 	const endInvestigation = function () {
