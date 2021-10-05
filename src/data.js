@@ -109,7 +109,6 @@ const computerFactory = function () {
 	const resumeInvestigation = function () {
 		currentShot = futureInvestigation.shift();
 		currentStep = investigationSteps[0];
-		currentInvHits.push(currentShot);
 	};
 
 	const endInvestigation = function () {
@@ -137,6 +136,7 @@ const computerFactory = function () {
 		...computer,
 		isInvestigating,
 		startNewInvestigation,
+		resumeInvestigation,
 		endInvestigation,
 		getNextInvestigationShot,
 		onLastInvestigationPath,
