@@ -115,6 +115,10 @@ const computerFactory = function () {
 		return nextShot;
 	};
 
+	const onLastInvestigationPath = function () {
+		return currentStep == investigationSteps[3] ? true : false;
+	};
+
 	const switchInvestigationDirection = function () {
 		// TODO
 	};
@@ -125,6 +129,7 @@ const computerFactory = function () {
 		startNewInvestigation,
 		endInvestigation,
 		getNextInvestigationShot,
+		onLastInvestigationPath,
 		switchInvestigationDirection,
 	};
 };
