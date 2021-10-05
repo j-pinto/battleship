@@ -91,15 +91,19 @@ const computerFactory = function () {
 		[1, 0],
 		[-1, 0],
 	];
-
+	let currentOrigin = [];
+	let currentStep = [];
 	let currentInvHits = [];
 	let futureInvestigation = [];
 
 	//public methods (are included in returned object)
 	const isInvestigating = () => investigating;
 
-	const startInvestigation = function () {
-		// TODO
+	const startNewInvestigation = function (newHit) {
+		investigating = true;
+		currentOrigin = newHit;
+		currentInvHits.push(newHit);
+		currentStep = investigationSteps[0];
 	};
 
 	const endInvestigation = function () {
@@ -117,7 +121,7 @@ const computerFactory = function () {
 	return {
 		...computer,
 		isInvestigating,
-		startInvestigation,
+		startNewInvestigation,
 		endInvestigation,
 		getNextInvestigationShot,
 		switchInvestigationDirection,
