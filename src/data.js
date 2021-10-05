@@ -119,8 +119,8 @@ const computerFactory = function () {
 	};
 
 	const getNextInvestigationShot = function () {
-		let nextShot = increment(currentShot, currentStep);
-		return nextShot;
+		let currentShot = increment(currentShot, currentStep);
+		return currentShot;
 	};
 
 	const onLastInvestigationPath = function () {
