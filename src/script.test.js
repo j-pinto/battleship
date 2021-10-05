@@ -16,7 +16,7 @@ import {
 
 import { game } from "./script.js";
 
-describe("curry", () => {
+xdescribe("curry", () => {
 	test("curried func works with args passed separately", () => {
 		let sum = (a, b, c) => a + b + c;
 		sum = curry(sum);
@@ -32,7 +32,7 @@ describe("curry", () => {
 	});
 });
 
-describe("areEqualArrays", () => {
+xdescribe("areEqualArrays", () => {
 	test("returns true for arrays with same elements, same order", () => {
 		let arr1 = [1, 2, 3];
 		let arr2 = [1, 2, 3];
@@ -64,7 +64,7 @@ describe("areEqualArrays", () => {
 	});
 });
 
-describe("setContainsMatch", () => {
+xdescribe("setContainsMatch", () => {
 	test("returns true if position array contains shot array", () => {
 		let positions = [
 			[0, 0],
@@ -106,7 +106,7 @@ describe("setContainsMatch", () => {
 	});
 });
 
-describe("isHit", () => {
+xdescribe("isHit", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -136,7 +136,7 @@ describe("isHit", () => {
 	});
 });
 
-describe("getBoatNameIfHit", () => {
+xdescribe("getBoatNameIfHit", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -167,7 +167,7 @@ describe("getBoatNameIfHit", () => {
 	});
 });
 
-describe("getPositionSet", () => {
+xdescribe("getPositionSet", () => {
 	test("returns correct array of positions given boatLength and origin", () => {
 		let step = [0, 1],
 			origin = [2, 3],
@@ -182,7 +182,7 @@ describe("getPositionSet", () => {
 	});
 });
 
-describe("getRandomOrigin", () => {
+xdescribe("getRandomOrigin", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -217,7 +217,7 @@ describe("getRandomOrigin", () => {
 	});
 });
 
-describe("outOfBounds", () => {
+xdescribe("outOfBounds", () => {
 	test("returns true if array has element outside range 0...9", () => {
 		let array1 = [-1, 8],
 			array2 = [3, 10];
@@ -233,7 +233,7 @@ describe("outOfBounds", () => {
 	});
 });
 
-describe("positionsInvalid", () => {
+xdescribe("positionsInvalid", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -284,7 +284,7 @@ describe("positionsInvalid", () => {
 	});
 });
 
-describe("randomBoatPlacement", () => {
+xdescribe("randomBoatPlacement", () => {
 	test("over many trials, returns valid new boat position", () => {
 		let boats = [
 			{
@@ -337,7 +337,7 @@ describe("randomBoatPlacement", () => {
 	});
 });
 
-describe("makeRandomShot", () => {
+xdescribe("makeRandomShot", () => {
 	test("over many trials, returns random square not contained in previous shot arrays", () => {
 		let prevShots = [
 			[0, 0],
@@ -359,8 +359,46 @@ describe("makeRandomShot", () => {
 	});
 });
 
-describe("game.takeTurn()", () => {
-	test("always produces a winner", () => {
+describe("investigation procedure", () => {
+	game.player.placeSingleBoat("cruiser", [
+		[2, 0],
+		[2, 1],
+		[2, 2],
+	]);
+	game.player.placeSingleBoat("battleship", [
+		[0, 3],
+		[1, 3],
+		[2, 3],
+		[3, 3],
+	]);
+	game.player.placeSingleBoat("submarine", [
+		[4, 3],
+		[4, 4],
+		[4, 5],
+	]);
+	game.player.placeSingleBoat("destroyer", [
+		[5, 3],
+		[5, 4],
+	]);
+	let currentPlayer = game.computer;
+	let enemyPlayer = game.player;
+
+	test("correctly triggers investigation", () => {
+		let shot = [2, 3];
+		game.updateData(currentPlayer, enemyPlayer, shot);
+		let info = currentPlayer.getInvInfo();
+		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
+		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(1);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual(shot);
+		expect(info.currentInvHits).toContainEqual(shot);
+		expect(info.currentStep).toEqual([0, 1]);
+		expect(currentPlayer.getNextInvestigationShot()).toEqual([2, 4]);
+	});
+});
+
+xdescribe("game.takeTurn()", () => {
+	xtest("always produces a winner", () => {
 		let winner = undefined;
 		game.init();
 		do {
