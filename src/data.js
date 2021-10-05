@@ -92,6 +92,9 @@ const computerFactory = function () {
 		[-1, 0],
 	];
 
+	let currentInvHits = [];
+	let futureInvestigation = [];
+
 	//public methods (are included in returned object)
 	const isInvestigating = () => investigating;
 
