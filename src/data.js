@@ -1,4 +1,4 @@
-import { randomBoatPlacement, increment } from "./logic.js";
+import { randomBoatPlacement, increment, setContainsMatch } from "./logic.js";
 
 const boatFactory = function (title, len) {
 	let name = title;
@@ -114,13 +114,14 @@ const computerFactory = function () {
 			sunkBoatPositions.push(increment(currentShot, invertedStep));
 		}
 
-		//filter sunkBoat hits from invHits
-		futureInvestigation = futureInvestigation.filter((shot) =>
-			sunkBoatPositions.includes(shot)
+		//filter sunkBoat hits from invHits, assign to future
+		futureInvestigation = currentInvHits.filter((shot) =>
+			setContainsMatch(shot, sunkBoatPositions)
 		);
 
 		currentShot = [];
 		currentStep = [];
+		currentInvHits = [];
 	};
 
 	const resumeInvestigation = function () {
