@@ -106,6 +106,23 @@ const computerFactory = function () {
 		currentInvHits.push(newHit);
 	};
 
+	const suspendInvestigation = function (sunkBoatLength) {
+		//get all sunkBoat hits
+		let invertedStep = [currentStep[0] * -1, currentStep[1] * -1];
+		let sunkBoatPositions = [];
+		for (let i = 0; i < sunkBoatLength; i++) {
+			sunkBoatPositions.push(increment(currentShot, invertedStep));
+		}
+
+		//filter sunkBoat hits from invHits
+		futureInvestigation = futureInvestigation.filter((shot) =>
+			sunkBoatPositions.includes(shot)
+		);
+
+		currentShot = [];
+		currentStep = [];
+	};
+
 	const resumeInvestigation = function () {
 		currentShot = futureInvestigation.shift();
 		currentStep = investigationSteps[0];
@@ -136,6 +153,7 @@ const computerFactory = function () {
 		...computer,
 		isInvestigating,
 		startNewInvestigation,
+		suspendInvestigation,
 		resumeInvestigation,
 		endInvestigation,
 		getNextInvestigationShot,
