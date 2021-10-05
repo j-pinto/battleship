@@ -21,55 +21,46 @@ const game = (() => {
 		return turnCount % 2 === 0 ? computer : player;
 	};
 
-	const takeTurn = function () {
-		// turn setup
-		let currentPlayer = getCurrentPlayer();
+	const playerTurn = function (currentPlayer) {
 		let prevShots = currentPlayer.getPrevShots();
 		let enemyPlayer = getEnemyPlayer();
+
+		// "determine shot" - will eventually use player input
+		let shot = makeRandomShot(prevShots);
+
+		updateData(currentPlayer, enemyPlayer, shot);
+	};
+
+	const computerTurn = function (currentPlayer) {
+		let prevShots = currentPlayer.getPrevShots();
+		let enemyPlayer = getEnemyPlayer();
+		let shot = makeRandomShot(prevShots);
+		updateData(currentPlayer, enemyPlayer, shot);
+	};
+
+	const updateData = function (currentPlayer, enemyPlayer, shot) {
 		let enemyBoats = enemyPlayer.getAllBoats();
-
-		let shot = undefined;
-		let hit = false;
-		let sink = false;
-
-		////////// IGNORE THIS BLOCK FOR NOW ///////
-		/*
-		if computers turn
-      determine if investigating
-        next inv shot if investigating
-		  else random shot
-		else if players turn
-		  take shot input (implement later, random shot for now)
-    */
-		////////////////////////////////////////////
-
-		// "determine shot"
-		shot = makeRandomShot(prevShots);
-
-		// update hit data or miss data
-		hit = isHit(shot, enemyBoats);
+		let hit = isHit(shot, enemyBoats);
 		let hitBoatName;
 		if (hit) {
 			currentPlayer.addPrevHit(shot);
 			hitBoatName = getBoatNameIfHit(shot, enemyBoats);
 			enemyPlayer.registerHit(hitBoatName);
-			sink = boatSunk(hitBoatName, enemyBoats);
+			if (boatSunk(hitBoatName, enemyBoats)) {
+				enemyPlayer.sinkBoat(hitBoatName);
+			}
 		} else {
 			currentPlayer.addPrevMiss(shot);
 		}
+	};
 
-		// update sink data
-		if (sink) {
-			enemyPlayer.sinkBoat(hitBoatName);
+	const takeTurn = function () {
+		let currentPlayer = getCurrentPlayer();
+		if (currentPlayer == computer) {
+			computerTurn(currentPlayer);
+		} else {
+			playerTurn(currentPlayer);
 		}
-
-		/*
-		update investigation
-      if sink
-        end inv
-      if miss
-        switch dir  
-    */
 
 		turnCount++;
 	};
