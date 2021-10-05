@@ -136,6 +136,11 @@ const computerFactory = function () {
 		currentInvHits = [];
 	};
 
+	const addInvestigationHit = function (shot) {
+		computer.addPrevHit(shot);
+		currentInvHits.push(shot);
+	};
+
 	const getNextInvestigationShot = function () {
 		let currentShot = increment(currentShot, currentStep);
 		return currentShot;
@@ -157,6 +162,7 @@ const computerFactory = function () {
 		suspendInvestigation,
 		resumeInvestigation,
 		endInvestigation,
+		addInvestigationHit,
 		getNextInvestigationShot,
 		onLastInvestigationPath,
 		switchInvestigationDirection,
