@@ -120,7 +120,8 @@ const computerFactory = function () {
 	};
 
 	const switchInvestigationDirection = function () {
-		// TODO
+		let index = investigationSteps.findIndex((step) => step == currentStep);
+		currentStep = investigationSteps[index++];
 	};
 
 	return {
