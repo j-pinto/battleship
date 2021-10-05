@@ -1,7 +1,13 @@
 "use strict";
 import "./style.css";
 import { playerFactory, computerFactory } from "./data.js";
-import { makeRandomShot, getBoatNameIfHit, boatSunk, isHit } from "./logic.js";
+import {
+	makeRandomShot,
+	getBoatNameIfHit,
+	boatSunk,
+	isHit,
+	outOfBounds,
+} from "./logic.js";
 
 const game = (() => {
 	const player = playerFactory();
@@ -42,19 +48,65 @@ const game = (() => {
 		}
 	};
 
+	const investigate = function (currentPlayer) {
+		let enemyPlayer = getEnemyPlayer();
+
+		let shot = currentPlayer.getNextInvestigationShot();
+
+		if (outOfBounds(shot) && !currentPlayer.onLastInvestigationPath()) {
+			currentPlayer.switchInvestigationDirection();
+			shot = currentPlayer.getNextInvestigationShot();
+		}
+
+		updateData(currentPlayer, enemyPlayer, shot);
+	};
+
 	const updateData = function (currentPlayer, enemyPlayer, shot) {
 		let enemyBoats = enemyPlayer.getAllBoats();
 		let hit = isHit(shot, enemyBoats);
 		let hitBoatName;
+		let sink;
 		if (hit) {
 			currentPlayer.addPrevHit(shot);
 			hitBoatName = getBoatNameIfHit(shot, enemyBoats);
 			enemyPlayer.registerHit(hitBoatName);
-			if (boatSunk(hitBoatName, enemyBoats)) {
+			sink = boatSunk(hitBoatName, enemyBoats);
+			if (sink) {
 				enemyPlayer.sinkBoat(hitBoatName);
 			}
 		} else {
 			currentPlayer.addPrevMiss(shot);
+		}
+
+		if (currentPlayer == computer && currentPlayer.isInvestigating()) {
+			updateInvestigation(currentPlayer, shot, hit, sink, hitBoatName);
+		}
+	};
+
+	const updateInvestigation = function (
+		currentPlayer,
+		shot,
+		hit,
+		sink,
+		hitBoatName
+	) {
+		if (!hit) {
+			currentPlayer.switchInvestigationDirection();
+			return;
+		}
+
+		if (hit) {
+			currentPlayer.addInvestigationHit(shot);
+		}
+
+		if (sink) {
+			let sunkBoat = currentPlayer.getBoatByName(hitBoatName);
+			let futureInv = currentPlayer.determineFutureInv(sunkBoat.length);
+			if (futureInv.length > 0) {
+				currentPlayer.suspendInvestigation();
+			} else {
+				currentPlayer.endInvestigation();
+			}
 		}
 	};
 
