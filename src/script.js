@@ -48,6 +48,10 @@ const game = function () {
 		let currentPlayer = computer;
 		let enemyPlayer = player;
 
+		if (currentPlayer.getInvInfo().suspended == true) {
+			currentPlayer.resumeInvestigation();
+		}
+
 		let shot = currentPlayer.getNextInvestigationShot();
 		if (outOfBounds(shot) && !currentPlayer.onLastInvestigationPath()) {
 			currentPlayer.switchInvestigationDirection();
