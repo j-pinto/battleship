@@ -161,7 +161,7 @@ const computerFactory = function () {
 	const switchInvestigationDirection = function () {
 		currentShot = origin;
 		let index = investigationSteps.findIndex((step) => step == currentStep);
-		currentStep = investigationSteps[index++];
+		currentStep = investigationSteps[index + 1];
 	};
 
 	const getInvInfo = function () {
