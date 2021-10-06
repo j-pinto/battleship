@@ -142,8 +142,13 @@ const computerFactory = function () {
 	};
 
 	const endInvestigation = function () {
-		suspendInvestigation();
 		investigating = false;
+		suspended = false;
+		origin = [];
+		currentShot = [];
+		currentStep = [];
+		currentInvHits = [];
+		futureInvestigation = [];
 	};
 
 	const addInvestigationHit = function (shot) {
