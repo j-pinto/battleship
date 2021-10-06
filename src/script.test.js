@@ -424,11 +424,11 @@ describe("investigation procedure", () => {
 		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(3);
 		expect(enemyPlayer.getBoatByName("cruiser").sunk).toBe(true);
 		expect(info.investigating).toBe(true);
+		expect(info.suspended).toBe(true);
 		expect(info.futureInvestigation).toContainEqual([2, 3]);
 		expect(info.origin).toEqual([]);
 		expect(info.currentInvHits).toEqual([]);
 		expect(info.currentShot).toEqual([]);
-		expect(info.currentStep).toEqual([1, 0]);
 	});
 
 	test("shot 6, 7, 8 resumes investigation, hits battleship, submarine, destroyer", () => {
@@ -449,5 +449,47 @@ describe("investigation procedure", () => {
 		expect(info.currentInvHits).toContainEqual([4, 3]);
 		expect(info.currentInvHits).toContainEqual(info.currentShot);
 		expect(info.currentStep).toEqual([1, 0]);
+	});
+
+	test("8th shot misses, investigation direction switches", () => {
+		g.computerTurn();
+		let misses = currentPlayer.getPrevMisses();
+		let info = currentPlayer.getInvInfo();
+
+		expect(misses).toContainEqual([6, 3]);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual([2, 3]);
+		expect(info.currentStep).toEqual([-1, 0]);
+	});
+
+	test("shots 9 and 10 hit & sink battleship, investigation suspended with correct future info", () => {
+		g.computerTurn();
+		g.computerTurn();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(4);
+		expect(enemyPlayer.getBoatByName("battleship").sunk).toBe(true);
+		expect(info.investigating).toBe(true);
+		expect(info.suspended).toBe(true);
+		expect(info.futureInvestigation).toContainEqual([4, 3]);
+		expect(info.futureInvestigation).toContainEqual([5, 3]);
+		expect(info.origin).toEqual([]);
+		expect(info.currentInvHits).toEqual([]);
+		expect(info.currentShot).toEqual([]);
+	});
+
+	test("shots 11 and 12 hit & sink submarine, investigation suspended with correct future info", () => {
+		g.computerTurn();
+		g.computerTurn();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("submarine").hits).toBe(3);
+		expect(enemyPlayer.getBoatByName("submarine").sunk).toBe(true);
+		expect(info.investigating).toBe(true);
+		expect(info.suspended).toBe(true);
+		expect(info.futureInvestigation).toContainEqual([5, 3]);
+		expect(info.origin).toEqual([]);
+		expect(info.currentInvHits).toEqual([]);
+		expect(info.currentShot).toEqual([]);
 	});
 });
