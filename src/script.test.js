@@ -428,6 +428,26 @@ describe("investigation procedure", () => {
 		expect(info.origin).toEqual([]);
 		expect(info.currentInvHits).toEqual([]);
 		expect(info.currentShot).toEqual([]);
-		expect(info.currentStep).toEqual([]);
+		expect(info.currentStep).toEqual([1, 0]);
+	});
+
+	test("shot 6, 7, 8 resumes investigation, hits battleship, submarine, destroyer", () => {
+		g.computerTurn();
+		g.computerTurn();
+		g.computerTurn();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(2);
+		expect(enemyPlayer.getBoatByName("submarine").hits).toBe(1);
+		expect(enemyPlayer.getBoatByName("destroyer").hits).toBe(1);
+		expect(info.investigating).toBe(true);
+		expect(info.suspended).toBe(false);
+		expect(info.origin).toEqual([2, 3]);
+		expect(info.currentShot).toEqual([5, 3]);
+		expect(info.currentInvHits).toContainEqual(info.origin);
+		expect(info.currentInvHits).toContainEqual([3, 3]);
+		expect(info.currentInvHits).toContainEqual([4, 3]);
+		expect(info.currentInvHits).toContainEqual(info.currentShot);
+		expect(info.currentStep).toEqual([1, 0]);
 	});
 });
