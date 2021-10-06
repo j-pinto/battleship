@@ -72,6 +72,7 @@ const game = (() => {
 			}
 			if (currentPlayer == computer && !currentPlayer.isInvestigating()) {
 				currentPlayer.startNewInvestigation(shot);
+				return;
 			}
 		} else {
 			currentPlayer.addPrevMiss(shot);
