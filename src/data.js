@@ -127,9 +127,9 @@ const computerFactory = function () {
 
 	const suspendInvestigation = function () {
 		suspended = true;
+		switchInvestigationDirection();
 		origin = [];
 		currentShot = [];
-		currentStep = [];
 		currentInvHits = [];
 	};
 
@@ -138,7 +138,6 @@ const computerFactory = function () {
 		let resumeStartingPoint = futureInvestigation.shift();
 		origin = resumeStartingPoint;
 		currentInvHits.push(resumeStartingPoint);
-		currentStep = investigationSteps[0];
 	};
 
 	const endInvestigation = function () {
