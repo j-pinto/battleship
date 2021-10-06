@@ -118,9 +118,11 @@ const computerFactory = function () {
 		}
 
 		//filter sunkBoat hits from invHits, assign to future
-		futureInvestigation = currentInvHits.filter(
+		let followUps = currentInvHits.filter(
 			(shot) => !setContainsMatch(shot, sunkBoatPositions)
 		);
+
+		followUps.forEach((shot) => futureInvestigation.push(shot));
 
 		return futureInvestigation;
 	};
