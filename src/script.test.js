@@ -11,7 +11,6 @@ import {
 	positionSetInvalid,
 	randomBoatPlacement,
 	makeRandomShot,
-	gameOver,
 } from "./logic.js";
 
 import { game } from "./script.js";
@@ -384,9 +383,12 @@ describe("investigation procedure", () => {
 		]);
 		let currentPlayer = g.computer;
 		let enemyPlayer = g.player;
+		let info = currentPlayer.getInvInfo();
+		expect(info.investigating).toBe(false);
+
 		let shot = [2, 3];
 		g.updateData(currentPlayer, enemyPlayer, shot);
-		let info = currentPlayer.getInvInfo();
+		info = currentPlayer.getInvInfo();
 		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
 		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(1);
 		expect(info.investigating).toBe(true);
