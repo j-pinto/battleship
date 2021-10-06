@@ -7,6 +7,7 @@ import {
 	boatSunk,
 	isHit,
 	outOfBounds,
+	setContainsMatch,
 } from "./logic.js";
 
 const game = function () {
@@ -52,8 +53,9 @@ const game = function () {
 			currentPlayer.resumeInvestigation();
 		}
 
+		let prevShots = currentPlayer.getPrevShots();
 		let shot = currentPlayer.getNextInvestigationShot();
-		if (outOfBounds(shot) && !currentPlayer.onLastInvestigationPath()) {
+		while (outOfBounds(shot) || setContainsMatch(shot, prevShots)) {
 			currentPlayer.switchInvestigationDirection();
 			shot = currentPlayer.getNextInvestigationShot();
 		}
