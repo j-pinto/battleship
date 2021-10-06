@@ -19,17 +19,10 @@ const game = function () {
 		computer.placeAllBoatsRandomly();
 	};
 
-	const getCurrentPlayer = function () {
-		return turnCount % 2 === 0 ? player : computer;
-	};
-
-	const getEnemyPlayer = function () {
-		return turnCount % 2 === 0 ? computer : player;
-	};
-
-	const playerTurn = function (currentPlayer) {
+	const playerTurn = function () {
+		let currentPlayer = player;
+		let enemyPlayer = computer;
 		let prevShots = currentPlayer.getPrevShots();
-		let enemyPlayer = getEnemyPlayer();
 
 		// "determine shot" - will eventually use player input
 		let shot = makeRandomShot(prevShots);
@@ -37,23 +30,23 @@ const game = function () {
 		updateData(currentPlayer, enemyPlayer, shot);
 	};
 
-	const computerTurn = function (currentPlayer) {
+	const computerTurn = function () {
+		let currentPlayer = computer;
+		let enemyPlayer = player;
 		let prevShots = currentPlayer.getPrevShots();
-		let enemyPlayer = getEnemyPlayer();
 		let shot = makeRandomShot(prevShots);
 		updateData(currentPlayer, enemyPlayer, shot);
 	};
 
-	const investigate = function (currentPlayer) {
-		let enemyPlayer = getEnemyPlayer();
+	const investigate = function () {
+		let currentPlayer = computer;
+		let enemyPlayer = player;
 
 		let shot = currentPlayer.getNextInvestigationShot();
-
 		if (outOfBounds(shot) && !currentPlayer.onLastInvestigationPath()) {
 			currentPlayer.switchInvestigationDirection();
 			shot = currentPlayer.getNextInvestigationShot();
 		}
-
 		updateData(currentPlayer, enemyPlayer, shot);
 	};
 
@@ -111,11 +104,10 @@ const game = function () {
 	};
 
 	const takeTurn = function () {
-		let currentPlayer = getCurrentPlayer();
-		if (currentPlayer == computer) {
-			computerTurn(currentPlayer);
+		if (turnCount % 2 == 0) {
+			computerTurn();
 		} else {
-			playerTurn(currentPlayer);
+			playerTurn();
 		}
 
 		turnCount++;
