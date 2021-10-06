@@ -385,14 +385,11 @@ describe("investigation procedure", () => {
 	let enemyPlayer = g.player;
 
 	test("correctly triggers investigation upon new hit on battleship", () => {
-		let info = currentPlayer.getInvInfo();
-		expect(info.investigating).toBe(false);
-
 		// simulate first shot
 		let shot = [2, 3];
 		g.updateData(currentPlayer, enemyPlayer, shot);
 
-		info = currentPlayer.getInvInfo();
+		let info = currentPlayer.getInvInfo();
 		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
 		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(1);
 		expect(info.investigating).toBe(true);
@@ -426,9 +423,6 @@ describe("investigation procedure", () => {
 		expect(info.investigating).toBe(true);
 		expect(info.suspended).toBe(true);
 		expect(info.futureInvestigation).toContainEqual([2, 3]);
-		expect(info.origin).toEqual([]);
-		expect(info.currentInvHits).toEqual([]);
-		expect(info.currentShot).toEqual([]);
 	});
 
 	test("shot 6, 7, 8 resumes investigation, hits battleship, submarine, destroyer", () => {
@@ -473,9 +467,6 @@ describe("investigation procedure", () => {
 		expect(info.suspended).toBe(true);
 		expect(info.futureInvestigation).toContainEqual([4, 3]);
 		expect(info.futureInvestigation).toContainEqual([5, 3]);
-		expect(info.origin).toEqual([]);
-		expect(info.currentInvHits).toEqual([]);
-		expect(info.currentShot).toEqual([]);
 	});
 
 	test("shots 11 and 12 hit & sink submarine, investigation suspended with correct future info", () => {
@@ -488,9 +479,6 @@ describe("investigation procedure", () => {
 		expect(info.investigating).toBe(true);
 		expect(info.suspended).toBe(true);
 		expect(info.futureInvestigation).toContainEqual([5, 3]);
-		expect(info.origin).toEqual([]);
-		expect(info.currentInvHits).toEqual([]);
-		expect(info.currentShot).toEqual([]);
 	});
 
 	test("shots 13 sinks destroyer, investigation ended", () => {
