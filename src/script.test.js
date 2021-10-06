@@ -388,8 +388,10 @@ describe("investigation procedure", () => {
 		let info = currentPlayer.getInvInfo();
 		expect(info.investigating).toBe(false);
 
+		// simulate first shot
 		let shot = [2, 3];
 		g.updateData(currentPlayer, enemyPlayer, shot);
+
 		info = currentPlayer.getInvInfo();
 		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
 		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(1);
@@ -400,7 +402,7 @@ describe("investigation procedure", () => {
 	});
 
 	test("second shot misses, investigation direction switches", () => {
-		g.investigate();
+		g.computerTurn();
 		let misses = currentPlayer.getPrevMisses();
 		let info = currentPlayer.getInvInfo();
 
@@ -412,9 +414,9 @@ describe("investigation procedure", () => {
 	});
 
 	test("shots 3,4 and 5 hit & sink cruiser, investigation suspended with correct future info", () => {
-		g.investigate();
-		g.investigate();
-		g.investigate();
+		g.computerTurn();
+		g.computerTurn();
+		g.computerTurn();
 		let misses = currentPlayer.getPrevMisses();
 		let info = currentPlayer.getInvInfo();
 		console.log(info);

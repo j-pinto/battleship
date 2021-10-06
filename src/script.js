@@ -33,9 +33,15 @@ const game = function () {
 	const computerTurn = function () {
 		let currentPlayer = computer;
 		let enemyPlayer = player;
-		let prevShots = currentPlayer.getPrevShots();
-		let shot = makeRandomShot(prevShots);
-		updateData(currentPlayer, enemyPlayer, shot);
+
+		if (currentPlayer.isInvestigating()) {
+			investigate();
+			return;
+		} else {
+			let prevShots = currentPlayer.getPrevShots();
+			let shot = makeRandomShot(prevShots);
+			updateData(currentPlayer, enemyPlayer, shot);
+		}
 	};
 
 	const investigate = function () {
