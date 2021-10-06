@@ -129,7 +129,6 @@ const computerFactory = function () {
 
 	const suspendInvestigation = function () {
 		suspended = true;
-		switchInvestigationDirection();
 		origin = [];
 		currentShot = [];
 		currentInvHits = [];
