@@ -110,14 +110,15 @@ const computerFactory = function () {
 	const determineFutureInv = function (sunkBoatLength) {
 		//get all sunkBoat hits
 		let invertedStep = [currentStep[0] * -1, currentStep[1] * -1];
-		let sunkBoatPositions = [];
-		for (let i = 0; i < sunkBoatLength; i++) {
-			sunkBoatPositions.push(increment(currentShot, invertedStep));
+		let sunkBoatPositions = [currentShot];
+		for (let i = 0; i < sunkBoatLength - 1; i++) {
+			let nextPos = increment(sunkBoatPositions[i], invertedStep);
+			sunkBoatPositions.push(nextPos);
 		}
 
 		//filter sunkBoat hits from invHits, assign to future
-		futureInvestigation = currentInvHits.filter((shot) =>
-			setContainsMatch(shot, sunkBoatPositions)
+		futureInvestigation = currentInvHits.filter(
+			(shot) => !setContainsMatch(shot, sunkBoatPositions)
 		);
 
 		return futureInvestigation;
