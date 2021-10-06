@@ -384,7 +384,7 @@ describe("investigation procedure", () => {
 	let currentPlayer = g.computer;
 	let enemyPlayer = g.player;
 
-	test("correctly triggers investigation upon new hit", () => {
+	test("correctly triggers investigation upon new hit on battleship", () => {
 		let info = currentPlayer.getInvInfo();
 		expect(info.investigating).toBe(false);
 
@@ -409,5 +409,19 @@ describe("investigation procedure", () => {
 		expect(info.origin).toEqual([2, 3]);
 		expect(info.currentInvHits).toContainEqual([2, 3]);
 		expect(info.currentStep).toEqual([0, -1]);
+	});
+
+	test("shots 3,4 and 5 hit & sink cruiser, investigation suspended with correct future info", () => {
+		g.investigate();
+		g.investigate();
+		g.investigate();
+		let misses = currentPlayer.getPrevMisses();
+		let info = currentPlayer.getInvInfo();
+		console.log(info);
+		expect(misses).toContainEqual([2, 4]);
+		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(3);
+		expect(enemyPlayer.getBoatByName("cruiser").sunk).toBe(true);
+		expect(info.investigating).toBe(true);
+		expect(info.futureInvestigation).toContainEqual([2, 3]);
 	});
 });
