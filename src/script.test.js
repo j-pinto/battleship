@@ -419,11 +419,15 @@ describe("investigation procedure", () => {
 		g.computerTurn();
 		let misses = currentPlayer.getPrevMisses();
 		let info = currentPlayer.getInvInfo();
-		console.log(info);
+
 		expect(misses).toContainEqual([2, 4]);
 		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(3);
 		expect(enemyPlayer.getBoatByName("cruiser").sunk).toBe(true);
 		expect(info.investigating).toBe(true);
 		expect(info.futureInvestigation).toContainEqual([2, 3]);
+		expect(info.origin).toEqual([]);
+		expect(info.currentInvHits).toEqual([]);
+		expect(info.currentShot).toEqual([]);
+		expect(info.currentStep).toEqual([]);
 	});
 });
