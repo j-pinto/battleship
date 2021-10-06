@@ -492,4 +492,14 @@ describe("investigation procedure", () => {
 		expect(info.currentInvHits).toEqual([]);
 		expect(info.currentShot).toEqual([]);
 	});
+
+	test("shots 13 sinks destroyer, investigation ended", () => {
+		g.computerTurn();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("destroyer").hits).toBe(2);
+		expect(enemyPlayer.getBoatByName("destroyer").sunk).toBe(true);
+		expect(info.investigating).toBe(false);
+		expect(info.suspended).toBe(false);
+	});
 });
