@@ -85,6 +85,7 @@ const computerFactory = function () {
 	//additional private properties for computer object
 	//(not inherited, not included in return object)
 	let investigating = false;
+	let suspended = false;
 	const investigationSteps = [
 		[0, 1],
 		[0, -1],
@@ -125,6 +126,7 @@ const computerFactory = function () {
 	};
 
 	const suspendInvestigation = function () {
+		suspended = true;
 		origin = [];
 		currentShot = [];
 		currentStep = [];
@@ -132,6 +134,7 @@ const computerFactory = function () {
 	};
 
 	const resumeInvestigation = function () {
+		suspended = false;
 		let resumeStartingPoint = futureInvestigation.shift();
 		origin = resumeStartingPoint;
 		currentInvHits.push(resumeStartingPoint);
@@ -168,6 +171,7 @@ const computerFactory = function () {
 	const getInvInfo = function () {
 		return {
 			investigating: investigating,
+			suspended: suspended,
 			origin: origin,
 			currentShot: currentShot,
 			currentStep: currentStep,
