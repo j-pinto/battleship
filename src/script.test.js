@@ -360,32 +360,32 @@ xdescribe("makeRandomShot", () => {
 });
 
 describe("investigation procedure", () => {
-	game.player.placeSingleBoat("cruiser", [
-		[2, 0],
-		[2, 1],
-		[2, 2],
-	]);
-	game.player.placeSingleBoat("battleship", [
-		[0, 3],
-		[1, 3],
-		[2, 3],
-		[3, 3],
-	]);
-	game.player.placeSingleBoat("submarine", [
-		[4, 3],
-		[4, 4],
-		[4, 5],
-	]);
-	game.player.placeSingleBoat("destroyer", [
-		[5, 3],
-		[5, 4],
-	]);
-	let currentPlayer = game.computer;
-	let enemyPlayer = game.player;
-
 	test("correctly triggers investigation", () => {
+		let g = game();
+		g.player.placeSingleBoat("cruiser", [
+			[2, 0],
+			[2, 1],
+			[2, 2],
+		]);
+		g.player.placeSingleBoat("battleship", [
+			[0, 3],
+			[1, 3],
+			[2, 3],
+			[3, 3],
+		]);
+		g.player.placeSingleBoat("submarine", [
+			[4, 3],
+			[4, 4],
+			[4, 5],
+		]);
+		g.player.placeSingleBoat("destroyer", [
+			[5, 3],
+			[5, 4],
+		]);
+		let currentPlayer = g.computer;
+		let enemyPlayer = g.player;
 		let shot = [2, 3];
-		game.updateData(currentPlayer, enemyPlayer, shot);
+		g.updateData(currentPlayer, enemyPlayer, shot);
 		let info = currentPlayer.getInvInfo();
 		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
 		expect(enemyPlayer.getBoatByName("battleship").hits).toBe(1);
@@ -394,28 +394,5 @@ describe("investigation procedure", () => {
 		expect(info.currentInvHits).toContainEqual(shot);
 		expect(info.currentStep).toEqual([0, 1]);
 		expect(currentPlayer.getNextInvestigationShot()).toEqual([2, 4]);
-	});
-});
-
-xdescribe("game.takeTurn()", () => {
-	xtest("always produces a winner", () => {
-		let winner = undefined;
-		game.init();
-		do {
-			game.takeTurn();
-		} while (
-			!gameOver(game.player.getAllBoats()) &&
-			!gameOver(game.computer.getAllBoats())
-		);
-
-		if (gameOver(game.player.getAllBoats())) {
-			winner = "computer";
-		} else if (gameOver(game.computer.getAllBoats())) {
-			winner = "player";
-		}
-
-		let validResults = ["player", "computer"];
-		expect(winner).not.toBe(undefined);
-		expect(validResults).toContain(winner);
 	});
 });

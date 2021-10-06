@@ -9,7 +9,7 @@ import {
 	outOfBounds,
 } from "./logic.js";
 
-const game = (() => {
+const game = function () {
 	const player = playerFactory();
 	const computer = computerFactory();
 	let turnCount = 0;
@@ -132,6 +132,6 @@ const game = (() => {
 		updateData,
 		updateInvestigation,
 	};
-})();
+};
 
 export { game };
