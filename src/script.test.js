@@ -359,30 +359,32 @@ xdescribe("makeRandomShot", () => {
 });
 
 describe("investigation procedure", () => {
-	test("correctly triggers investigation", () => {
-		let g = game();
-		g.player.placeSingleBoat("cruiser", [
-			[2, 0],
-			[2, 1],
-			[2, 2],
-		]);
-		g.player.placeSingleBoat("battleship", [
-			[0, 3],
-			[1, 3],
-			[2, 3],
-			[3, 3],
-		]);
-		g.player.placeSingleBoat("submarine", [
-			[4, 3],
-			[4, 4],
-			[4, 5],
-		]);
-		g.player.placeSingleBoat("destroyer", [
-			[5, 3],
-			[5, 4],
-		]);
-		let currentPlayer = g.computer;
-		let enemyPlayer = g.player;
+	// game setup for test
+	let g = game();
+	g.player.placeSingleBoat("cruiser", [
+		[2, 0],
+		[2, 1],
+		[2, 2],
+	]);
+	g.player.placeSingleBoat("battleship", [
+		[0, 3],
+		[1, 3],
+		[2, 3],
+		[3, 3],
+	]);
+	g.player.placeSingleBoat("submarine", [
+		[4, 3],
+		[4, 4],
+		[4, 5],
+	]);
+	g.player.placeSingleBoat("destroyer", [
+		[5, 3],
+		[5, 4],
+	]);
+	let currentPlayer = g.computer;
+	let enemyPlayer = g.player;
+
+	test("correctly triggers investigation upon new hit", () => {
 		let info = currentPlayer.getInvInfo();
 		expect(info.investigating).toBe(false);
 
@@ -395,6 +397,17 @@ describe("investigation procedure", () => {
 		expect(info.origin).toEqual(shot);
 		expect(info.currentInvHits).toContainEqual(shot);
 		expect(info.currentStep).toEqual([0, 1]);
-		expect(currentPlayer.getNextInvestigationShot()).toEqual([2, 4]);
+	});
+
+	test("second shot misses, investigation direction switches", () => {
+		g.investigate();
+		let misses = currentPlayer.getPrevMisses();
+		let info = currentPlayer.getInvInfo();
+
+		expect(misses).toContainEqual([2, 4]);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual([2, 3]);
+		expect(info.currentInvHits).toContainEqual([2, 3]);
+		expect(info.currentStep).toEqual([0, -1]);
 	});
 });
