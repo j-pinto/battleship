@@ -11,6 +11,7 @@ import {
 	positionSetInvalid,
 	randomBoatPlacement,
 	makeRandomShot,
+	gameOver,
 } from "./logic.js";
 
 import { game } from "./script.js";
@@ -556,5 +557,31 @@ describe("complex investigation", () => {
 		expect(enemyPlayer.getBoatByName("destroyer").sunk).toBe(true);
 		expect(info.investigating).toBe(false);
 		expect(info.suspended).toBe(false);
+	});
+});
+
+describe("autoplay full game", () => {
+	test("should always produce a winner", () => {
+		for (let i = 0; i < 25; i++) {
+			let g = game();
+			g.init();
+
+			do {
+				g.takeTurn();
+			} while (
+				!gameOver(g.computer.getAllBoats()) &&
+				!gameOver(g.player.getAllBoats())
+			);
+
+			let results = ["player", "computer"];
+			let winner;
+			if (gameOver(g.computer.getAllBoats())) {
+				winner = "player";
+			} else if (gameOver(g.player.getAllBoats())) {
+				winner = "computer";
+			}
+
+			expect(results).toContain(winner);
+		}
 	});
 });
