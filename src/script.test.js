@@ -15,7 +15,7 @@ import {
 
 import { game } from "./script.js";
 
-xdescribe("curry", () => {
+describe("curry", () => {
 	test("curried func works with args passed separately", () => {
 		let sum = (a, b, c) => a + b + c;
 		sum = curry(sum);
@@ -31,7 +31,7 @@ xdescribe("curry", () => {
 	});
 });
 
-xdescribe("areEqualArrays", () => {
+describe("areEqualArrays", () => {
 	test("returns true for arrays with same elements, same order", () => {
 		let arr1 = [1, 2, 3];
 		let arr2 = [1, 2, 3];
@@ -63,7 +63,7 @@ xdescribe("areEqualArrays", () => {
 	});
 });
 
-xdescribe("setContainsMatch", () => {
+describe("setContainsMatch", () => {
 	test("returns true if position array contains shot array", () => {
 		let positions = [
 			[0, 0],
@@ -105,7 +105,7 @@ xdescribe("setContainsMatch", () => {
 	});
 });
 
-xdescribe("isHit", () => {
+describe("isHit", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -135,7 +135,7 @@ xdescribe("isHit", () => {
 	});
 });
 
-xdescribe("getBoatNameIfHit", () => {
+describe("getBoatNameIfHit", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -166,7 +166,7 @@ xdescribe("getBoatNameIfHit", () => {
 	});
 });
 
-xdescribe("getPositionSet", () => {
+describe("getPositionSet", () => {
 	test("returns correct array of positions given boatLength and origin", () => {
 		let step = [0, 1],
 			origin = [2, 3],
@@ -181,7 +181,7 @@ xdescribe("getPositionSet", () => {
 	});
 });
 
-xdescribe("getRandomOrigin", () => {
+describe("getRandomOrigin", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -216,7 +216,7 @@ xdescribe("getRandomOrigin", () => {
 	});
 });
 
-xdescribe("outOfBounds", () => {
+describe("outOfBounds", () => {
 	test("returns true if array has element outside range 0...9", () => {
 		let array1 = [-1, 8],
 			array2 = [3, 10];
@@ -232,7 +232,7 @@ xdescribe("outOfBounds", () => {
 	});
 });
 
-xdescribe("positionsInvalid", () => {
+describe("positionsInvalid", () => {
 	let boats = [
 		{
 			name: "carrier",
@@ -283,7 +283,7 @@ xdescribe("positionsInvalid", () => {
 	});
 });
 
-xdescribe("randomBoatPlacement", () => {
+describe("randomBoatPlacement", () => {
 	test("over many trials, returns valid new boat position", () => {
 		let boats = [
 			{
@@ -336,7 +336,7 @@ xdescribe("randomBoatPlacement", () => {
 	});
 });
 
-xdescribe("makeRandomShot", () => {
+describe("makeRandomShot", () => {
 	test("over many trials, returns random square not contained in previous shot arrays", () => {
 		let prevShots = [
 			[0, 0],
@@ -358,7 +358,74 @@ xdescribe("makeRandomShot", () => {
 	});
 });
 
-describe("investigation procedure", () => {
+describe("basic investigation", () => {
+	// game setup for test
+	let g = game();
+	g.player.placeSingleBoat("cruiser", [
+		[0, 0],
+		[1, 0],
+		[2, 0],
+	]);
+
+	g.computer.addPrevMiss([3, 0]);
+	let currentPlayer = g.computer;
+	let enemyPlayer = g.player;
+
+	test("correctly triggers investigation upon new hit on cruiser", () => {
+		// simulate first shot
+		let shot = [2, 0];
+		g.updateData(currentPlayer, enemyPlayer, shot);
+
+		let info = currentPlayer.getInvInfo();
+		expect(currentPlayer.getPrevHits()).toContainEqual(shot);
+		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(1);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual(shot);
+		expect(info.currentInvHits).toContainEqual(shot);
+		expect(info.currentStep).toEqual([0, 1]);
+	});
+
+	test("second shot misses, investigation direction switches", () => {
+		g.computerTurn();
+		let misses = currentPlayer.getPrevMisses();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(1);
+		expect(misses).toContainEqual([3, 0]);
+		expect(misses).toContainEqual([2, 1]);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual([2, 0]);
+		expect(info.currentInvHits).toContainEqual([2, 0]);
+		expect(info.currentStep).toEqual([0, -1]);
+	});
+
+	test("third shot hits, but investigation had switched twice more due to south direction being out of bounds and [3,0] being a previous shot prior to investigation", () => {
+		g.computerTurn();
+		let misses = currentPlayer.getPrevMisses();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(2);
+		expect(misses).toContainEqual([3, 0]);
+		expect(misses).toContainEqual([2, 1]);
+		expect(info.investigating).toBe(true);
+		expect(info.origin).toEqual([2, 0]);
+		expect(info.currentInvHits).toContainEqual([2, 0]);
+		expect(info.currentInvHits).toContainEqual([1, 0]);
+		expect(info.currentStep).toEqual([-1, 0]);
+	});
+
+	test("shot 4 sinks cruiser, investigation ended", () => {
+		g.computerTurn();
+		let info = currentPlayer.getInvInfo();
+
+		expect(enemyPlayer.getBoatByName("cruiser").hits).toBe(3);
+		expect(enemyPlayer.getBoatByName("cruiser").sunk).toBe(true);
+		expect(info.investigating).toBe(false);
+		expect(info.suspended).toBe(false);
+	});
+});
+
+describe("complex investigation", () => {
 	// game setup for test
 	let g = game();
 	g.player.placeSingleBoat("cruiser", [
