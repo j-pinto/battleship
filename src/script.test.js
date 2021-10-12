@@ -562,7 +562,7 @@ describe("complex investigation", () => {
 
 describe("autoplay full game", () => {
 	test("should always produce a winner", () => {
-		for (let i = 0; i < 25; i++) {
+		for (let i = 0; i < 5; i++) {
 			let g = game();
 			g.init();
 
