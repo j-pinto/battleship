@@ -1,0 +1,30 @@
+body {
+	background-color: black;
+}
+
+#container {
+	display: grid;
+	grid-template-columns: 1.5fr 0.1fr 1.5fr;
+	grid-template-rows: 0.4fr 1.5fr;
+	gap: 0px 0px;
+	grid-auto-flow: row;
+	grid-template-areas:
+		"header header header"
+		"boat-grid spacer shot-grid";
+}
+
+#header {
+	grid-area: header;
+}
+
+#boat-grid {
+	grid-area: boat-grid;
+}
+
+#shot-grid {
+	grid-area: shot-grid;
+}
+
+#spacer {
+	grid-area: spacer;
+}
