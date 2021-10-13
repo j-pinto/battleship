@@ -61,3 +61,7 @@
 .square {
 	background-color: lightskyblue;
 }
+
+.available:hover {
+	background-color: lightseagreen;
+}
