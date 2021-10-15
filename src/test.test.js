@@ -14,7 +14,7 @@ import {
 	gameOver,
 } from "./logic.js";
 
-import { game } from "./script.js";
+import { game } from "./game.js";
 
 xdescribe("curry", () => {
 	test("curried func works with args passed separately", () => {
@@ -580,7 +580,6 @@ describe("autoplay full game", () => {
 			winner = "computer";
 		}
 
-		console.log(winner);
 		expect(results).toContain(winner);
 	});
 });
